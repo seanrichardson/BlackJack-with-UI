@@ -1,0 +1,2737 @@
+﻿<Window x:Class="BlackJackWPF.MainWindow"
+        xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        xmlns:ee="http://schemas.microsoft.com/expression/2010/effects"
+        xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+        xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+        xmlns:local="clr-namespace:BlackJackWPF"
+        xmlns:vms="clr-namespace:BlackJackWPF"
+        mc:Ignorable="d"
+        Title="Black Jack"
+        Height="650"
+        Width="1045">
+  <Window.Background>
+    <VisualBrush TileMode="Tile"
+                 Viewport="0,0,0.20,0.25">
+      <VisualBrush.Visual>
+        <Image Source="Images/Table6.jpg" />
+      </VisualBrush.Visual>
+    </VisualBrush>
+  </Window.Background>
+  <Window.DataContext>
+    <vms:TableVM />
+  </Window.DataContext>
+  <Window.Resources>
+    <Style TargetType="Button">
+      <Setter Property="Template">
+        <Setter.Value>
+          <ControlTemplate TargetType="{x:Type Button}">
+            <Border Name="ButtonStyle"
+                    Grid.Column="1"
+                    Grid.Row="1"
+                    CornerRadius="5">
+              <Border.Style>
+                <Style>
+                  <Setter Property="Border.Background">
+                    <Setter.Value>
+                      <LinearGradientBrush EndPoint="2.803,-1.456"
+                                           StartPoint="-0.395,1.66">
+                        <GradientStop Color="#FFEEEEEE"
+                                      Offset="0.1" />
+                        <GradientStop Color="Black"
+                                      Offset="1" />
+                      </LinearGradientBrush>
+                    </Setter.Value>
+                  </Setter>
+                  <Style.Triggers>
+                    <Trigger Property="Border.IsMouseOver"
+                             Value="True">
+                      <Setter Property="Border.Background">
+                        <Setter.Value>
+                          <LinearGradientBrush EndPoint="2.803,-1.456"
+                                               StartPoint="-0.395,1.66">
+                            <GradientStop Color="#FFEEEEEE"
+                                          Offset="0.206" />
+                            <GradientStop Color="Black"
+                                          Offset="1" />
+                          </LinearGradientBrush>
+                        </Setter.Value>
+                      </Setter>
+                    </Trigger>
+                    <Trigger Property="Border.IsEnabled"
+                             Value="false">
+                      <Setter Property="Border.Background">
+                        <Setter.Value>
+                          <LinearGradientBrush EndPoint="2.803,-1.456"
+                                               StartPoint="-0.395,1.66">
+                            <GradientStop Color="#FFEEEEEE"
+                                          Offset="0.206" />
+                            <GradientStop Color="Black"
+                                          Offset="1" />
+                          </LinearGradientBrush>
+                        </Setter.Value>
+                      </Setter>
+                      <Setter Property="TextBlock.Foreground"
+                              Value="#88000000">
+                      </Setter>
+                    </Trigger>
+                  </Style.Triggers>
+                </Style>
+              </Border.Style>
+              <ContentPresenter HorizontalAlignment="Center"
+                                VerticalAlignment="Center" />
+            </Border>
+          </ControlTemplate>
+        </Setter.Value>
+      </Setter>
+    </Style>
+    <DataTemplate DataType="{x:Type vms:CardVM}">
+      <Viewbox Height="160"
+               Width="100"
+               Margin="{Binding CardOffset}"
+               LayoutTransform="{Binding CardTransform}">
+        <Grid Height="252"
+              Width="182">
+          <Image Source="Images/Card.jpg">
+            <Image.Style>
+              <Style>
+                <Style.Setters>
+                  <Setter Property="Grid.Visibility"
+                          Value="Visible" />
+                </Style.Setters>
+                <Style.Triggers>
+                  <DataTrigger Binding="{Binding FaceUp}"
+                               Value="true">
+                    <DataTrigger.Setters>
+                      <Setter Property="Grid.Visibility"
+                              Value="Hidden" />
+                    </DataTrigger.Setters>
+                  </DataTrigger>
+                </Style.Triggers>
+              </Style>
+            </Image.Style>
+            <Image.Clip>
+              <RectangleGeometry Rect="0,0,158,249"
+                                 RadiusX="20"
+                                 RadiusY="20">
+              </RectangleGeometry>
+            </Image.Clip>
+          </Image>
+          <Image>
+            <Image.Style>
+              <Style>
+                <Style.Setters>
+                  <Setter Property="Grid.Visibility"
+                          Value="Hidden" />
+                </Style.Setters>
+                <Style.Triggers>
+                  <DataTrigger Binding="{Binding FaceUp}"
+                               Value="true">
+                    <DataTrigger.Setters>
+                      <Setter Property="Grid.Visibility"
+                              Value="Visible" />
+                    </DataTrigger.Setters>
+                  </DataTrigger>
+                </Style.Triggers>
+              </Style>
+            </Image.Style>
+            <Image.Source>
+              <CroppedBitmap Source="Images/FaceCardSprite2.png"
+                             SourceRect="{Binding CardSource}" />
+            </Image.Source>
+          </Image>
+        </Grid>
+        <Viewbox.BitmapEffect>
+          <DropShadowBitmapEffect ShadowDepth="2" />
+        </Viewbox.BitmapEffect>
+      </Viewbox>
+    </DataTemplate>
+    
+    <Storyboard x:Key="1P1_1">
+      <DoubleAnimation Storyboard.TargetName="DropShadowEffect1P1_1"
+                       Storyboard.TargetProperty="ShadowDepth"
+                       Duration="0:0:0.5"
+                       From="0"
+                       To="2"
+                       BeginTime="0:0:0.005" />
+      <DoubleAnimation Storyboard.TargetName="Translate1P1_1"
+                       Storyboard.TargetProperty="X"
+                       Duration="0:0:1"
+                       From="0"
+                       To="-220"
+                       BeginTime="0:0:0.005" />
+      <DoubleAnimation Storyboard.TargetName="Translate1P1_1"
+                       Storyboard.TargetProperty="Y"
+                       Duration="0:0:1"
+                       From="0"
+                       To="370"
+                       BeginTime="0:0:0.005" />
+    </Storyboard>
+    <Storyboard x:Key="1PD_1">
+      <DoubleAnimation Storyboard.TargetName="DropShadowEffect1PD_1"
+                       Storyboard.TargetProperty="ShadowDepth"
+                       Duration="0:0:0.5"
+                       From="0"
+                       To="2"
+                       BeginTime="0:0:0.015" />
+      <DoubleAnimation Storyboard.TargetName="Translate1PD_1"
+                       Storyboard.TargetProperty="X"
+                       Duration="0:0:1"
+                       From="0"
+                       To="-310"
+                       BeginTime="0:0:0.015" />
+      <DoubleAnimation Storyboard.TargetName="Translate1PD_1"
+                       Storyboard.TargetProperty="Y"
+                       Duration="0:0:1"
+                       From="0"
+                       To="30"
+                       BeginTime="0:0:0.015" />
+    </Storyboard>
+    <Storyboard x:Key="1P1_2">
+      <DoubleAnimation Storyboard.TargetName="DropShadowEffect1P1_2"
+                       Storyboard.TargetProperty="ShadowDepth"
+                       Duration="0:0:0.5"
+                       From="0"
+                       To="2"
+                       BeginTime="0:0:0.005" />
+      <DoubleAnimation Storyboard.TargetName="Translate1P1_2"
+                       Storyboard.TargetProperty="X"
+                       Duration="0:0:1"
+                       From="0"
+                       To="-220"
+                       BeginTime="0:0:0.005" />
+      <DoubleAnimation Storyboard.TargetName="Translate1P1_2"
+                       Storyboard.TargetProperty="Y"
+                       Duration="0:0:1"
+                       From="0"
+                       To="370"
+                       BeginTime="0:0:0.005" />
+    </Storyboard>
+    <Storyboard x:Key="1PD_2">
+      <DoubleAnimation Storyboard.TargetName="DropShadowEffect1PD_2"
+                       Storyboard.TargetProperty="ShadowDepth"
+                       Duration="0:0:0.5"
+                       From="0"
+                       To="2"
+                       BeginTime="0:0:0.015" />
+      <DoubleAnimation Storyboard.TargetName="Translate1PD_2"
+                       Storyboard.TargetProperty="X"
+                       Duration="0:0:1"
+                       From="0"
+                       To="-310"
+                       BeginTime="0:0:0.015" />
+      <DoubleAnimation Storyboard.TargetName="Translate1PD_2"
+                       Storyboard.TargetProperty="Y"
+                       Duration="0:0:1"
+                       From="0"
+                       To="30"
+                       BeginTime="0:0:0.015" />
+    </Storyboard>
+
+    <DataTemplate DataType="{x:Type vms:DeckVM}">
+      <Canvas Grid.ColumnSpan="1"
+              Margin="0"
+              Grid.RowSpan="1">
+        <Viewbox Canvas.Top="16"
+                 Canvas.Left="50"
+                 Height="160"
+                 Width="100">
+          <Image Source="Images/Card.jpg"
+                 Height="283"
+                 Width="178">
+            <Image.Clip>
+              <RectangleGeometry Rect="0,0,158,249"
+                                 RadiusX="25"
+                                 RadiusY="25">
+              </RectangleGeometry>
+            </Image.Clip>
+          </Image>
+          <Viewbox.BitmapEffect>
+            <DropShadowBitmapEffect ShadowDepth="2" />
+          </Viewbox.BitmapEffect>
+        </Viewbox>
+        <Viewbox Height="160"
+                 Width="100"
+                 Canvas.Top="18"
+                 Canvas.Left="52">
+          <Image Source="Images/Card.jpg"
+                 Height="283"
+                 Width="178">
+            <Image.Clip>
+              <RectangleGeometry Rect="0,0,158,249"
+                                 RadiusX="25"
+                                 RadiusY="25">
+              </RectangleGeometry>
+            </Image.Clip>
+          </Image>
+          <Viewbox.BitmapEffect>
+            <DropShadowBitmapEffect ShadowDepth="2" />
+          </Viewbox.BitmapEffect>
+        </Viewbox>
+        <Viewbox Height="160"
+                 Width="100"
+                 Canvas.Top="20"
+                 Canvas.Left="54">
+          <Image Source="Images/Card.jpg"
+                 Height="283"
+                 Width="178">
+            <Image.Clip>
+              <RectangleGeometry Rect="0,0,158,249"
+                                 RadiusX="25"
+                                 RadiusY="25">
+              </RectangleGeometry>
+            </Image.Clip>
+          </Image>
+          <Viewbox.BitmapEffect>
+            <DropShadowBitmapEffect ShadowDepth="2" />
+          </Viewbox.BitmapEffect>
+        </Viewbox>
+        <Viewbox Height="160"
+                 Width="100"
+                 Canvas.Top="22"
+                 Canvas.Left="56">
+          <Image Source="Images/Card.jpg"
+                 Height="283"
+                 Width="178">
+            <Image.Clip>
+              <RectangleGeometry Rect="0,0,158,249"
+                                 RadiusX="25"
+                                 RadiusY="25">
+              </RectangleGeometry>
+            </Image.Clip>
+          </Image>
+          <Viewbox.BitmapEffect>
+            <DropShadowBitmapEffect ShadowDepth="2" />
+          </Viewbox.BitmapEffect>
+        </Viewbox>
+
+        <!--<Grid Name="OnePlayerSelected">
+          --><!-- Card Animation Player1 --><!--
+          <Viewbox Height="160"
+                   Width="100"
+                   Canvas.Top="24"
+                   Canvas.Left="58">
+            <Image Source="Images/Card.jpg"
+                   Height="283"
+                   Width="178">
+              <Image.Clip>
+                <RectangleGeometry Rect="0,0,158,249"
+                                   RadiusX="25"
+                                   RadiusY="25">
+                </RectangleGeometry>
+              </Image.Clip>
+            </Image>
+            <Viewbox.BitmapEffect>
+              <DropShadowBitmapEffect x:Name="DropShadowEffect1P1_1" />
+            </Viewbox.BitmapEffect>
+            <Viewbox.RenderTransform>
+              <TranslateTransform x:Name="Translate1P1_1" />
+            </Viewbox.RenderTransform>
+            <Viewbox.Triggers>
+              <EventTrigger RoutedEvent="Mouse.MouseEnter">
+                <BeginStoryboard>
+                  <Storyboard>
+                    <DoubleAnimation Storyboard.TargetName="DropShadowEffect1P1_1"
+                                     Storyboard.TargetProperty="ShadowDepth"
+                                     Duration="0:0:0.5"
+                                     From="0"
+                                     To="2"
+                                     BeginTime="0:0:0.005" />
+                    <DoubleAnimation Storyboard.TargetName="Translate1P1_1"
+                                     Storyboard.TargetProperty="X"
+                                     Duration="0:0:1"
+                                     From="0"
+                                     To="-220"
+                                     BeginTime="0:0:0.005" />
+                    <DoubleAnimation Storyboard.TargetName="Translate1P1_1"
+                                     Storyboard.TargetProperty="Y"
+                                     Duration="0:0:1"
+                                     From="0"
+                                     To="370"
+                                     BeginTime="0:0:0.005" />
+                  </Storyboard>
+                </BeginStoryboard>
+              </EventTrigger>
+            </Viewbox.Triggers>
+          </Viewbox>
+          --><!-- Card Animation Dealer --><!--
+          <Viewbox Height="160"
+                   Width="100"
+                   Canvas.Top="24"
+                   Canvas.Left="58">
+            <Image Source="Images/Card.jpg"
+                   Height="283"
+                   Width="178">
+              <Image.Clip>
+                <RectangleGeometry Rect="0,0,158,249"
+                                   RadiusX="25"
+                                   RadiusY="25">
+                </RectangleGeometry>
+              </Image.Clip>
+            </Image>
+            <Viewbox.BitmapEffect>
+              <DropShadowBitmapEffect x:Name="DropShadowEffect1PD_1" />
+            </Viewbox.BitmapEffect>
+            <Viewbox.RenderTransform>
+              <TranslateTransform x:Name="Translate1PD_1" />
+            </Viewbox.RenderTransform>
+            <Viewbox.Triggers>
+              <EventTrigger RoutedEvent="Mouse.MouseEnter">
+                <BeginStoryboard>
+                  <Storyboard>
+                    <DoubleAnimation Storyboard.TargetName="DropShadowEffect1PD_1"
+                                     Storyboard.TargetProperty="ShadowDepth"
+                                     Duration="0:0:0.5"
+                                     From="0"
+                                     To="2"
+                                     BeginTime="0:0:0.015" />
+                    <DoubleAnimation Storyboard.TargetName="Translate1PD_1"
+                                     Storyboard.TargetProperty="X"
+                                     Duration="0:0:1"
+                                     From="0"
+                                     To="-310"
+                                     BeginTime="0:0:0.015" />
+                    <DoubleAnimation Storyboard.TargetName="Translate1PD_1"
+                                     Storyboard.TargetProperty="Y"
+                                     Duration="0:0:1"
+                                     From="0"
+                                     To="30"
+                                     BeginTime="0:0:0.015" />
+                  </Storyboard>
+                </BeginStoryboard>
+              </EventTrigger>
+            </Viewbox.Triggers>
+          </Viewbox>
+          --><!-- Card Animation Player1 --><!--
+          <Viewbox Height="160"
+                   Width="100"
+                   Canvas.Top="24"
+                   Canvas.Left="58">
+            <Image Source="Images/Card.jpg"
+                   Height="283"
+                   Width="178">
+              <Image.Clip>
+                <RectangleGeometry Rect="0,0,158,249"
+                                   RadiusX="25"
+                                   RadiusY="25">
+                </RectangleGeometry>
+              </Image.Clip>
+            </Image>
+            <Viewbox.BitmapEffect>
+              <DropShadowBitmapEffect x:Name="DropShadowEffect1P1_2" />
+            </Viewbox.BitmapEffect>
+            <Viewbox.RenderTransform>
+              <TranslateTransform x:Name="Translate1P1_2" />
+            </Viewbox.RenderTransform>
+            <Viewbox.Triggers>
+              <EventTrigger RoutedEvent="Mouse.MouseEnter">
+                <BeginStoryboard>
+                  <Storyboard>
+                    <DoubleAnimation Storyboard.TargetName="DropShadowEffect1P1_2"
+                                     Storyboard.TargetProperty="ShadowDepth"
+                                     Duration="0:0:0.5"
+                                     From="0"
+                                     To="2"
+                                     BeginTime="0:0:0.005" />
+                    <DoubleAnimation Storyboard.TargetName="Translate1P1_2"
+                                     Storyboard.TargetProperty="X"
+                                     Duration="0:0:1"
+                                     From="0"
+                                     To="-220"
+                                     BeginTime="0:0:0.005" />
+                    <DoubleAnimation Storyboard.TargetName="Translate1P1_2"
+                                     Storyboard.TargetProperty="Y"
+                                     Duration="0:0:1"
+                                     From="0"
+                                     To="370"
+                                     BeginTime="0:0:0.005" />
+                  </Storyboard>
+                </BeginStoryboard>
+              </EventTrigger>
+            </Viewbox.Triggers>
+          </Viewbox>
+          --><!-- Card Animation Dealer --><!--
+          <Viewbox Height="160"
+                   Width="100"
+                   Canvas.Top="24"
+                   Canvas.Left="58">
+            <Image Source="Images/Card.jpg"
+                   Height="283"
+                   Width="178">
+              <Image.Clip>
+                <RectangleGeometry Rect="0,0,158,249"
+                                   RadiusX="25"
+                                   RadiusY="25">
+                </RectangleGeometry>
+              </Image.Clip>
+            </Image>
+            <Viewbox.BitmapEffect>
+              <DropShadowBitmapEffect x:Name="DropShadowEffect1PD_2" />
+            </Viewbox.BitmapEffect>
+            <Viewbox.RenderTransform>
+              <TranslateTransform x:Name="Translate1PD_2" />
+            </Viewbox.RenderTransform>
+            <Viewbox.Triggers>
+              <EventTrigger RoutedEvent="Mouse.MouseEnter">
+                <BeginStoryboard>
+                  <Storyboard>
+                    <DoubleAnimation Storyboard.TargetName="DropShadowEffect1PD_2"
+                                     Storyboard.TargetProperty="ShadowDepth"
+                                     Duration="0:0:0.5"
+                                     From="0"
+                                     To="2"
+                                     BeginTime="0:0:0.015" />
+                    <DoubleAnimation Storyboard.TargetName="Translate1PD_2"
+                                     Storyboard.TargetProperty="X"
+                                     Duration="0:0:1"
+                                     From="0"
+                                     To="-310"
+                                     BeginTime="0:0:0.015" />
+                    <DoubleAnimation Storyboard.TargetName="Translate1PD_2"
+                                     Storyboard.TargetProperty="Y"
+                                     Duration="0:0:1"
+                                     From="0"
+                                     To="30"
+                                     BeginTime="0:0:0.015" />
+                  </Storyboard>
+                </BeginStoryboard>
+              </EventTrigger>
+            </Viewbox.Triggers>
+          </Viewbox>
+        </Grid>
+
+        <Grid Name="TwoPlayersSelected">
+          --><!-- Card Animation Player1 --><!--
+          <Viewbox Height="160"
+                   Width="100"
+                   Canvas.Top="24"
+                   Canvas.Left="58">
+            <Image Source="Images/Card.jpg"
+                   Height="283"
+                   Width="178">
+              <Image.Clip>
+                <RectangleGeometry Rect="0,0,158,249"
+                                   RadiusX="25"
+                                   RadiusY="25">
+                </RectangleGeometry>
+              </Image.Clip>
+            </Image>
+            <Viewbox.BitmapEffect>
+              <DropShadowBitmapEffect x:Name="DropShadowEffect2P1_1" />
+            </Viewbox.BitmapEffect>
+            <Viewbox.RenderTransform>
+              <TranslateTransform x:Name="Translate2P1_1" />
+            </Viewbox.RenderTransform>
+            <Viewbox.Triggers>
+              <EventTrigger RoutedEvent="Mouse.MouseEnter">
+                <BeginStoryboard>
+                  <Storyboard>
+                    <DoubleAnimation Storyboard.TargetName="DropShadowEffect2P1_1"
+                                     Storyboard.TargetProperty="ShadowDepth"
+                                     Duration="0:0:0.5"
+                                     From="0"
+                                     To="2"
+                                     BeginTime="0:0:0" />
+                    <DoubleAnimation Storyboard.TargetName="Translate2P1_1"
+                                     Storyboard.TargetProperty="X"
+                                     Duration="0:0:1"
+                                     From="0"
+                                     To="-100"
+                                     BeginTime="0:0:0" />
+                    <DoubleAnimation Storyboard.TargetName="Translate2P1_1"
+                                     Storyboard.TargetProperty="Y"
+                                     Duration="0:0:1"
+                                     From="0"
+                                     To="370"
+                                     BeginTime="0:0:0" />
+                  </Storyboard>
+                </BeginStoryboard>
+              </EventTrigger>
+            </Viewbox.Triggers>
+          </Viewbox>
+          --><!-- Card Animation Player2 --><!--
+          <Viewbox Height="160"
+                   Width="100"
+                   Canvas.Top="24"
+                   Canvas.Left="58">
+            <Image Source="Images/Card.jpg"
+                   Height="283"
+                   Width="178">
+              <Image.Clip>
+                <RectangleGeometry Rect="0,0,158,249"
+                                   RadiusX="25"
+                                   RadiusY="25">
+                </RectangleGeometry>
+              </Image.Clip>
+            </Image>
+            <Viewbox.BitmapEffect>
+              <DropShadowBitmapEffect x:Name="DropShadowEffect2P2_1" />
+            </Viewbox.BitmapEffect>
+            <Viewbox.RenderTransform>
+              <TranslateTransform x:Name="Translate2P2_1" />
+            </Viewbox.RenderTransform>
+            <Viewbox.Triggers>
+              <EventTrigger RoutedEvent="Mouse.MouseEnter">
+                <BeginStoryboard>
+                  <Storyboard>
+                    <DoubleAnimation Storyboard.TargetName="DropShadowEffect2P2_1"
+                                     Storyboard.TargetProperty="ShadowDepth"
+                                     Duration="0:0:0.5"
+                                     From="0"
+                                     To="2"
+                                     BeginTime="0:0:0" />
+                    <DoubleAnimation Storyboard.TargetName="Translate2P2_1"
+                                     Storyboard.TargetProperty="X"
+                                     Duration="0:0:1"
+                                     From="0"
+                                     To="-320"
+                                     BeginTime="0:0:0" />
+                    <DoubleAnimation Storyboard.TargetName="Translate2P2_1"
+                                     Storyboard.TargetProperty="Y"
+                                     Duration="0:0:1"
+                                     From="0"
+                                     To="370"
+                                     BeginTime="0:0:0" />
+                  </Storyboard>
+                </BeginStoryboard>
+              </EventTrigger>
+            </Viewbox.Triggers>
+          </Viewbox>
+          --><!-- Card Animation Dealer --><!--
+          <Viewbox Height="160"
+                   Width="100"
+                   Canvas.Top="24"
+                   Canvas.Left="58">
+            <Image Source="Images/Card.jpg"
+                   Height="283"
+                   Width="178">
+              <Image.Clip>
+                <RectangleGeometry Rect="0,0,158,249"
+                                   RadiusX="25"
+                                   RadiusY="25">
+                </RectangleGeometry>
+              </Image.Clip>
+            </Image>
+            <Viewbox.BitmapEffect>
+              <DropShadowBitmapEffect x:Name="DropShadowEffect2PD_1" />
+            </Viewbox.BitmapEffect>
+            <Viewbox.RenderTransform>
+              <TranslateTransform x:Name="Translate2PD_1" />
+            </Viewbox.RenderTransform>
+            <Viewbox.Triggers>
+              <EventTrigger RoutedEvent="Mouse.MouseEnter">
+                <BeginStoryboard>
+                  <Storyboard>
+                    <DoubleAnimation Storyboard.TargetName="DropShadowEffect2PD_1"
+                                     Storyboard.TargetProperty="ShadowDepth"
+                                     Duration="0:0:0.5"
+                                     From="0"
+                                     To="2"
+                                     BeginTime="0:0:0.015" />
+                    <DoubleAnimation Storyboard.TargetName="Translate2PD_1"
+                                     Storyboard.TargetProperty="X"
+                                     Duration="0:0:1"
+                                     From="0"
+                                     To="-310"
+                                     BeginTime="0:0:0.015" />
+                    <DoubleAnimation Storyboard.TargetName="Translate2PD_1"
+                                     Storyboard.TargetProperty="Y"
+                                     Duration="0:0:1"
+                                     From="0"
+                                     To="30"
+                                     BeginTime="0:0:0.015" />
+                  </Storyboard>
+                </BeginStoryboard>
+              </EventTrigger>
+            </Viewbox.Triggers>
+          </Viewbox>
+          --><!-- Card Animation Player1 --><!--
+          <Viewbox Height="160"
+                   Width="100"
+                   Canvas.Top="24"
+                   Canvas.Left="58">
+            <Image Source="Images/Card.jpg"
+                   Height="283"
+                   Width="178">
+              <Image.Clip>
+                <RectangleGeometry Rect="0,0,158,249"
+                                   RadiusX="25"
+                                   RadiusY="25">
+                </RectangleGeometry>
+              </Image.Clip>
+            </Image>
+            <Viewbox.BitmapEffect>
+              <DropShadowBitmapEffect x:Name="DropShadowEffect2P1_2" />
+            </Viewbox.BitmapEffect>
+            <Viewbox.RenderTransform>
+              <TranslateTransform x:Name="Translate2P1_2" />
+            </Viewbox.RenderTransform>
+            <Viewbox.Triggers>
+              <EventTrigger RoutedEvent="Mouse.MouseEnter">
+                <BeginStoryboard>
+                  <Storyboard>
+                    <DoubleAnimation Storyboard.TargetName="DropShadowEffect2P1_2"
+                                     Storyboard.TargetProperty="ShadowDepth"
+                                     Duration="0:0:0.5"
+                                     From="0"
+                                     To="2"
+                                     BeginTime="0:0:0" />
+                    <DoubleAnimation Storyboard.TargetName="Translate2P1_2"
+                                     Storyboard.TargetProperty="X"
+                                     Duration="0:0:1"
+                                     From="0"
+                                     To="-120"
+                                     BeginTime="0:0:0" />
+                    <DoubleAnimation Storyboard.TargetName="Translate2P1_2"
+                                     Storyboard.TargetProperty="Y"
+                                     Duration="0:0:1"
+                                     From="0"
+                                     To="365"
+                                     BeginTime="0:0:0" />
+                  </Storyboard>
+                </BeginStoryboard>
+              </EventTrigger>
+            </Viewbox.Triggers>
+          </Viewbox>
+          --><!-- Card Animation Player2 --><!--
+          <Viewbox Height="160"
+                   Width="100"
+                   Canvas.Top="24"
+                   Canvas.Left="58">
+            <Image Source="Images/Card.jpg"
+                   Height="283"
+                   Width="178">
+              <Image.Clip>
+                <RectangleGeometry Rect="0,0,158,249"
+                                   RadiusX="25"
+                                   RadiusY="25">
+                </RectangleGeometry>
+              </Image.Clip>
+            </Image>
+            <Viewbox.BitmapEffect>
+              <DropShadowBitmapEffect x:Name="DropShadowEffect2P2_2" />
+            </Viewbox.BitmapEffect>
+            <Viewbox.RenderTransform>
+              <TranslateTransform x:Name="Translate2P2_2" />
+            </Viewbox.RenderTransform>
+            <Viewbox.Triggers>
+              <EventTrigger RoutedEvent="Mouse.MouseEnter">
+                <BeginStoryboard>
+                  <Storyboard>
+                    <DoubleAnimation Storyboard.TargetName="DropShadowEffect2P2_2"
+                                     Storyboard.TargetProperty="ShadowDepth"
+                                     Duration="0:0:0.5"
+                                     From="0"
+                                     To="2"
+                                     BeginTime="0:0:0" />
+                    <DoubleAnimation Storyboard.TargetName="Translate2P2_2"
+                                     Storyboard.TargetProperty="X"
+                                     Duration="0:0:1"
+                                     From="0"
+                                     To="-340"
+                                     BeginTime="0:0:0" />
+                    <DoubleAnimation Storyboard.TargetName="Translate2P2_2"
+                                     Storyboard.TargetProperty="Y"
+                                     Duration="0:0:1"
+                                     From="0"
+                                     To="365"
+                                     BeginTime="0:0:0" />
+                  </Storyboard>
+                </BeginStoryboard>
+              </EventTrigger>
+            </Viewbox.Triggers>
+          </Viewbox>
+          --><!-- Card Animation Dealer --><!--
+          <Viewbox Height="160"
+                   Width="100"
+                   Canvas.Top="24"
+                   Canvas.Left="58">
+            <Image Source="Images/Card.jpg"
+                   Height="283"
+                   Width="178">
+              <Image.Clip>
+                <RectangleGeometry Rect="0,0,158,249"
+                                   RadiusX="25"
+                                   RadiusY="25">
+                </RectangleGeometry>
+              </Image.Clip>
+            </Image>
+            <Viewbox.BitmapEffect>
+              <DropShadowBitmapEffect x:Name="DropShadowEffect2PD_2" />
+            </Viewbox.BitmapEffect>
+            <Viewbox.RenderTransform>
+              <TranslateTransform x:Name="Translate2PD_2" />
+            </Viewbox.RenderTransform>
+            <Viewbox.Triggers>
+              <EventTrigger RoutedEvent="Mouse.MouseEnter">
+                <BeginStoryboard>
+                  <Storyboard>
+                    <DoubleAnimation Storyboard.TargetName="DropShadowEffect2PD_2"
+                                     Storyboard.TargetProperty="ShadowDepth"
+                                     Duration="0:0:0.5"
+                                     From="0"
+                                     To="2"
+                                     BeginTime="0:0:0.015" />
+                    <DoubleAnimation Storyboard.TargetName="Translate2PD_2"
+                                     Storyboard.TargetProperty="X"
+                                     Duration="0:0:1"
+                                     From="0"
+                                     To="-330"
+                                     BeginTime="0:0:0.015" />
+                    <DoubleAnimation Storyboard.TargetName="Translate2PD_2"
+                                     Storyboard.TargetProperty="Y"
+                                     Duration="0:0:1"
+                                     From="0"
+                                     To="25"
+                                     BeginTime="0:0:0.015" />
+                  </Storyboard>
+                </BeginStoryboard>
+              </EventTrigger>
+            </Viewbox.Triggers>
+          </Viewbox>
+        </Grid>
+
+        <Grid Name="ThreePlayersSelected">
+          --><!-- Card Animation Player1 --><!--
+          <Viewbox Height="160"
+                   Width="100"
+                   Canvas.Top="24"
+                   Canvas.Left="58">
+            <Image Source="Images/Card.jpg"
+                   Height="283"
+                   Width="178">
+              <Image.Clip>
+                <RectangleGeometry Rect="0,0,158,249"
+                                   RadiusX="25"
+                                   RadiusY="25">
+                </RectangleGeometry>
+              </Image.Clip>
+            </Image>
+            <Viewbox.BitmapEffect>
+              <DropShadowBitmapEffect x:Name="DropShadowEffect3P1_1" />
+            </Viewbox.BitmapEffect>
+            <Viewbox.RenderTransform>
+              <TranslateTransform x:Name="Translate3P1_1" />
+            </Viewbox.RenderTransform>
+            <Viewbox.Triggers>
+              <EventTrigger RoutedEvent="Mouse.MouseEnter">
+                <BeginStoryboard>
+                  <Storyboard>
+                    <DoubleAnimation Storyboard.TargetName="DropShadowEffect3P1_1"
+                                     Storyboard.TargetProperty="ShadowDepth"
+                                     Duration="0:0:0.5"
+                                     From="0"
+                                     To="2"
+                                     BeginTime="0:0:0" />
+                    <DoubleAnimation Storyboard.TargetName="Translate3P1_1"
+                                     Storyboard.TargetProperty="X"
+                                     Duration="0:0:1"
+                                     From="0"
+                                     To="0"
+                                     BeginTime="0:0:0" />
+                    <DoubleAnimation Storyboard.TargetName="Translate3P1_1"
+                                     Storyboard.TargetProperty="Y"
+                                     Duration="0:0:1"
+                                     From="0"
+                                     To="370"
+                                     BeginTime="0:0:0" />
+                  </Storyboard>
+                </BeginStoryboard>
+              </EventTrigger>
+            </Viewbox.Triggers>
+          </Viewbox>
+          --><!-- Card Animation Player2 --><!--
+          <Viewbox Height="160"
+                   Width="100"
+                   Canvas.Top="24"
+                   Canvas.Left="58">
+            <Image Source="Images/Card.jpg"
+                   Height="283"
+                   Width="178">
+              <Image.Clip>
+                <RectangleGeometry Rect="0,0,158,249"
+                                   RadiusX="25"
+                                   RadiusY="25">
+                </RectangleGeometry>
+              </Image.Clip>
+            </Image>
+            <Viewbox.BitmapEffect>
+              <DropShadowBitmapEffect x:Name="DropShadowEffect3P2_1" />
+            </Viewbox.BitmapEffect>
+            <Viewbox.RenderTransform>
+              <TranslateTransform x:Name="Translate3P2_1" />
+            </Viewbox.RenderTransform>
+            <Viewbox.Triggers>
+              <EventTrigger RoutedEvent="Mouse.MouseEnter">
+                <BeginStoryboard>
+                  <Storyboard>
+                    <DoubleAnimation Storyboard.TargetName="DropShadowEffect3P2_1"
+                                     Storyboard.TargetProperty="ShadowDepth"
+                                     Duration="0:0:0.5"
+                                     From="0"
+                                     To="2"
+                                     BeginTime="0:0:0.005" />
+                    <DoubleAnimation Storyboard.TargetName="Translate3P2_1"
+                                     Storyboard.TargetProperty="X"
+                                     Duration="0:0:1"
+                                     From="0"
+                                     To="-220"
+                                     BeginTime="0:0:0.005" />
+                    <DoubleAnimation Storyboard.TargetName="Translate3P2_1"
+                                     Storyboard.TargetProperty="Y"
+                                     Duration="0:0:1"
+                                     From="0"
+                                     To="370"
+                                     BeginTime="0:0:0.005" />
+                  </Storyboard>
+                </BeginStoryboard>
+              </EventTrigger>
+            </Viewbox.Triggers>
+          </Viewbox>
+          --><!-- Card Animation Player3 --><!--
+          <Viewbox Height="160"
+                   Width="100"
+                   Canvas.Top="24"
+                   Canvas.Left="58">
+            <Image Source="Images/Card.jpg"
+                   Height="283"
+                   Width="178">
+              <Image.Clip>
+                <RectangleGeometry Rect="0,0,158,249"
+                                   RadiusX="25"
+                                   RadiusY="25">
+                </RectangleGeometry>
+              </Image.Clip>
+            </Image>
+            <Viewbox.BitmapEffect>
+              <DropShadowBitmapEffect x:Name="DropShadowEffect3P3_1" />
+            </Viewbox.BitmapEffect>
+            <Viewbox.RenderTransform>
+              <TranslateTransform x:Name="Translate3P3_1" />
+            </Viewbox.RenderTransform>
+            <Viewbox.Triggers>
+              <EventTrigger RoutedEvent="Mouse.MouseEnter">
+                <BeginStoryboard>
+                  <Storyboard>
+                    <DoubleAnimation Storyboard.TargetName="DropShadowEffect3P3_1"
+                                     Storyboard.TargetProperty="ShadowDepth"
+                                     Duration="0:0:0.5"
+                                     From="0"
+                                     To="2"
+                                     BeginTime="0:0:0.01" />
+                    <DoubleAnimation Storyboard.TargetName="Translate3P3_1"
+                                     Storyboard.TargetProperty="X"
+                                     Duration="0:0:1"
+                                     From="0"
+                                     To="-440"
+                                     BeginTime="0:0:0.01" />
+                    <DoubleAnimation Storyboard.TargetName="Translate3P3_1"
+                                     Storyboard.TargetProperty="Y"
+                                     Duration="0:0:1"
+                                     From="0"
+                                     To="370"
+                                     BeginTime="0:0:0.01" />
+                  </Storyboard>
+                </BeginStoryboard>
+              </EventTrigger>
+            </Viewbox.Triggers>
+          </Viewbox>
+          --><!-- Card Animation Dealer --><!--
+          <Viewbox Height="160"
+                   Width="100"
+                   Canvas.Top="24"
+                   Canvas.Left="58">
+            <Image Source="Images/Card.jpg"
+                   Height="283"
+                   Width="178">
+              <Image.Clip>
+                <RectangleGeometry Rect="0,0,158,249"
+                                   RadiusX="25"
+                                   RadiusY="25">
+                </RectangleGeometry>
+              </Image.Clip>
+            </Image>
+            <Viewbox.BitmapEffect>
+              <DropShadowBitmapEffect x:Name="DropShadowEffect3PD_1" />
+            </Viewbox.BitmapEffect>
+            <Viewbox.RenderTransform>
+              <TranslateTransform x:Name="Translate3PD_1" />
+            </Viewbox.RenderTransform>
+            <Viewbox.Triggers>
+              <EventTrigger RoutedEvent="Mouse.MouseEnter">
+                <BeginStoryboard>
+                  <Storyboard>
+                    <DoubleAnimation Storyboard.TargetName="DropShadowEffect3PD_1"
+                                     Storyboard.TargetProperty="ShadowDepth"
+                                     Duration="0:0:0.5"
+                                     From="0"
+                                     To="2"
+                                     BeginTime="0:0:0.015" />
+                    <DoubleAnimation Storyboard.TargetName="Translate3PD_1"
+                                     Storyboard.TargetProperty="X"
+                                     Duration="0:0:1"
+                                     From="0"
+                                     To="-310"
+                                     BeginTime="0:0:0.015" />
+                    <DoubleAnimation Storyboard.TargetName="Translate3PD_1"
+                                     Storyboard.TargetProperty="Y"
+                                     Duration="0:0:1"
+                                     From="0"
+                                     To="30"
+                                     BeginTime="0:0:0.015" />
+                  </Storyboard>
+                </BeginStoryboard>
+              </EventTrigger>
+            </Viewbox.Triggers>
+          </Viewbox>
+          --><!-- Card Animation Player1 --><!--
+          <Viewbox Height="160"
+                   Width="100"
+                   Canvas.Top="24"
+                   Canvas.Left="58">
+            <Image Source="Images/Card.jpg"
+                   Height="283"
+                   Width="178">
+              <Image.Clip>
+                <RectangleGeometry Rect="0,0,158,249"
+                                   RadiusX="25"
+                                   RadiusY="25">
+                </RectangleGeometry>
+              </Image.Clip>
+            </Image>
+            <Viewbox.BitmapEffect>
+              <DropShadowBitmapEffect x:Name="DropShadowEffect3P1_2" />
+            </Viewbox.BitmapEffect>
+            <Viewbox.RenderTransform>
+              <TranslateTransform x:Name="Translate3P1_2" />
+            </Viewbox.RenderTransform>
+            <Viewbox.Triggers>
+              <EventTrigger RoutedEvent="Mouse.MouseEnter">
+                <BeginStoryboard>
+                  <Storyboard>
+                    <DoubleAnimation Storyboard.TargetName="DropShadowEffect3P1_2"
+                                     Storyboard.TargetProperty="ShadowDepth"
+                                     Duration="0:0:0.5"
+                                     From="0"
+                                     To="2"
+                                     BeginTime="0:0:0.02" />
+                    <DoubleAnimation Storyboard.TargetName="Translate3P1_2"
+                                     Storyboard.TargetProperty="X"
+                                     Duration="0:0:1"
+                                     From="0"
+                                     To="-20"
+                                     BeginTime="0:0:0.02" />
+                    <DoubleAnimation Storyboard.TargetName="Translate3P1_2"
+                                     Storyboard.TargetProperty="Y"
+                                     Duration="0:0:1"
+                                     From="0"
+                                     To="365"
+                                     BeginTime="0:0:0.02" />
+                  </Storyboard>
+                </BeginStoryboard>
+              </EventTrigger>
+            </Viewbox.Triggers>
+          </Viewbox>
+          --><!-- Card Animation Player2 --><!--
+          <Viewbox Height="160"
+                   Width="100"
+                   Canvas.Top="24"
+                   Canvas.Left="58">
+            <Image Source="Images/Card.jpg"
+                   Height="283"
+                   Width="178">
+              <Image.Clip>
+                <RectangleGeometry Rect="0,0,158,249"
+                                   RadiusX="25"
+                                   RadiusY="25">
+                </RectangleGeometry>
+              </Image.Clip>
+            </Image>
+            <Viewbox.BitmapEffect>
+              <DropShadowBitmapEffect x:Name="DropShadowEffect3P2_2" />
+            </Viewbox.BitmapEffect>
+            <Viewbox.RenderTransform>
+              <TranslateTransform x:Name="Translate3P2_2" />
+            </Viewbox.RenderTransform>
+            <Viewbox.Triggers>
+              <EventTrigger RoutedEvent="Mouse.MouseEnter">
+                <BeginStoryboard>
+                  <Storyboard>
+                    <DoubleAnimation Storyboard.TargetName="DropShadowEffect3P2_2"
+                                     Storyboard.TargetProperty="ShadowDepth"
+                                     Duration="0:0:0.5"
+                                     From="0"
+                                     To="2"
+                                     BeginTime="0:0:0.025" />
+                    <DoubleAnimation Storyboard.TargetName="Translate3P2_2"
+                                     Storyboard.TargetProperty="X"
+                                     Duration="0:0:1"
+                                     From="0"
+                                     To="-240"
+                                     BeginTime="0:0:0.025" />
+                    <DoubleAnimation Storyboard.TargetName="Translate3P2_2"
+                                     Storyboard.TargetProperty="Y"
+                                     Duration="0:0:1"
+                                     From="0"
+                                     To="365"
+                                     BeginTime="0:0:0.025" />
+                  </Storyboard>
+                </BeginStoryboard>
+              </EventTrigger>
+            </Viewbox.Triggers>
+          </Viewbox>
+          --><!-- Card Animation Player3 --><!--
+          <Viewbox Height="160"
+                   Width="100"
+                   Canvas.Top="24"
+                   Canvas.Left="58">
+            <Image Source="Images/Card.jpg"
+                   Height="283"
+                   Width="178">
+              <Image.Clip>
+                <RectangleGeometry Rect="0,0,158,249"
+                                   RadiusX="25"
+                                   RadiusY="25">
+                </RectangleGeometry>
+              </Image.Clip>
+            </Image>
+            <Viewbox.BitmapEffect>
+              <DropShadowBitmapEffect x:Name="DropShadowEffect3P3_2" />
+            </Viewbox.BitmapEffect>
+            <Viewbox.RenderTransform>
+              <TranslateTransform x:Name="Translate3P3_2" />
+            </Viewbox.RenderTransform>
+            <Viewbox.Triggers>
+              <EventTrigger RoutedEvent="Mouse.MouseEnter">
+                <BeginStoryboard>
+                  <Storyboard>
+                    <DoubleAnimation Storyboard.TargetName="DropShadowEffect3P3_2"
+                                     Storyboard.TargetProperty="ShadowDepth"
+                                     Duration="0:0:0.5"
+                                     From="0"
+                                     To="2"
+                                     BeginTime="0:0:0.03" />
+                    <DoubleAnimation Storyboard.TargetName="Translate3P3_2"
+                                     Storyboard.TargetProperty="X"
+                                     Duration="0:0:1"
+                                     From="0"
+                                     To="-460"
+                                     BeginTime="0:0:0.03" />
+                    <DoubleAnimation Storyboard.TargetName="Translate3P3_2"
+                                     Storyboard.TargetProperty="Y"
+                                     Duration="0:0:1"
+                                     From="0"
+                                     To="365"
+                                     BeginTime="0:0:0.03" />
+                  </Storyboard>
+                </BeginStoryboard>
+              </EventTrigger>
+            </Viewbox.Triggers>
+          </Viewbox>
+          --><!-- Card Animation Dealer --><!--
+          <Viewbox Height="160"
+                   Width="100"
+                   Canvas.Top="24"
+                   Canvas.Left="58">
+            <Image Source="Images/Card.jpg"
+                   Height="283"
+                   Width="178">
+              <Image.Clip>
+                <RectangleGeometry Rect="0,0,158,249"
+                                   RadiusX="25"
+                                   RadiusY="25">
+                </RectangleGeometry>
+              </Image.Clip>
+            </Image>
+            <Viewbox.BitmapEffect>
+              <DropShadowBitmapEffect x:Name="DropShadowEffect3PD_2" />
+            </Viewbox.BitmapEffect>
+            <Viewbox.RenderTransform>
+              <TranslateTransform x:Name="Translate3PD_2" />
+            </Viewbox.RenderTransform>
+            <Viewbox.Triggers>
+              <EventTrigger RoutedEvent="Mouse.MouseEnter">
+                <BeginStoryboard>
+                  <Storyboard>
+                    <DoubleAnimation Storyboard.TargetName="DropShadowEffect3PD_2"
+                                     Storyboard.TargetProperty="ShadowDepth"
+                                     Duration="0:0:0.5"
+                                     From="0"
+                                     To="2"
+                                     BeginTime="0:0:0.035" />
+                    <DoubleAnimation Storyboard.TargetName="Translate3PD_2"
+                                     Storyboard.TargetProperty="X"
+                                     Duration="0:0:1"
+                                     From="0"
+                                     To="-330"
+                                     BeginTime="0:0:0.035" />
+                    <DoubleAnimation Storyboard.TargetName="Translate3PD_2"
+                                     Storyboard.TargetProperty="Y"
+                                     Duration="0:0:1"
+                                     From="0"
+                                     To="25"
+                                     BeginTime="0:0:0.035" />
+                  </Storyboard>
+                </BeginStoryboard>
+              </EventTrigger>
+            </Viewbox.Triggers>
+          </Viewbox>
+        </Grid>
+
+        <Grid Name="FourPlayersSelected">
+          --><!-- Card Animations Player1 --><!--
+          <Viewbox Height="160"
+                   Width="100"
+                   Canvas.Top="24"
+                   Canvas.Left="58">
+            <Image Source="Images/Card.jpg"
+                   Height="283"
+                   Width="178">
+              <Image.Clip>
+                <RectangleGeometry Rect="0,0,158,249"
+                                   RadiusX="25"
+                                   RadiusY="25">
+                </RectangleGeometry>
+              </Image.Clip>
+            </Image>
+            <Viewbox.BitmapEffect>
+              <DropShadowBitmapEffect x:Name="DropShadowEffect4P1_1" />
+            </Viewbox.BitmapEffect>
+            <Viewbox.RenderTransform>
+              <TranslateTransform x:Name="Translate4P1_1" />
+            </Viewbox.RenderTransform>
+            <Viewbox.Triggers>
+              <EventTrigger RoutedEvent="Mouse.MouseEnter">
+                <BeginStoryboard>
+                  <Storyboard>
+                    <DoubleAnimation Storyboard.TargetName="DropShadowEffect4P1_1"
+                                     Storyboard.TargetProperty="ShadowDepth"
+                                     Duration="0:0:0.5"
+                                     From="0"
+                                     To="2"
+                                     BeginTime="0:0:0" />
+                    <DoubleAnimation Storyboard.TargetName="Translate4P1_1"
+                                     Storyboard.TargetProperty="X"
+                                     Duration="0:0:1"
+                                     From="0"
+                                     To="-540"
+                                     BeginTime="0:0:0" />
+                    <DoubleAnimation Storyboard.TargetName="Translate4P1_1"
+                                     Storyboard.TargetProperty="Y"
+                                     Duration="0:0:1"
+                                     From="0"
+                                     To="370"
+                                     BeginTime="0:0:0" />
+                  </Storyboard>
+                </BeginStoryboard>
+              </EventTrigger>
+            </Viewbox.Triggers>
+          </Viewbox>
+          --><!-- Card Animations Player2 --><!--
+          <Viewbox Height="160"
+                   Width="100"
+                   Canvas.Top="24"
+                   Canvas.Left="58">
+            <Image Source="Images/Card.jpg"
+                   Height="283"
+                   Width="178">
+              <Image.Clip>
+                <RectangleGeometry Rect="0,0,158,249"
+                                   RadiusX="25"
+                                   RadiusY="25">
+                </RectangleGeometry>
+              </Image.Clip>
+            </Image>
+            <Viewbox.BitmapEffect>
+              <DropShadowBitmapEffect x:Name="DropShadowEffect4P2_1" />
+            </Viewbox.BitmapEffect>
+            <Viewbox.RenderTransform>
+              <TranslateTransform x:Name="Translate4P2_1" />
+            </Viewbox.RenderTransform>
+            <Viewbox.Triggers>
+              <EventTrigger RoutedEvent="Mouse.MouseEnter">
+                <BeginStoryboard>
+                  <Storyboard>
+                    <DoubleAnimation Storyboard.TargetName="DropShadowEffect4P2_1"
+                                     Storyboard.TargetProperty="ShadowDepth"
+                                     Duration="0:0:0.5"
+                                     From="0"
+                                     To="2"
+                                     BeginTime="0:0:0" />
+                    <DoubleAnimation Storyboard.TargetName="Translate4P2_1"
+                                     Storyboard.TargetProperty="X"
+                                     Duration="0:0:1"
+                                     From="0"
+                                     To="-100"
+                                     BeginTime="0:0:0" />
+                    <DoubleAnimation Storyboard.TargetName="Translate4P2_1"
+                                     Storyboard.TargetProperty="Y"
+                                     Duration="0:0:1"
+                                     From="0"
+                                     To="370"
+                                     BeginTime="0:0:0" />
+                  </Storyboard>
+                </BeginStoryboard>
+              </EventTrigger>
+            </Viewbox.Triggers>
+          </Viewbox>
+          --><!-- Card Animations Player3 --><!--
+          <Viewbox Height="160"
+                   Width="100"
+                   Canvas.Top="24"
+                   Canvas.Left="58">
+            <Image Source="Images/Card.jpg"
+                   Height="283"
+                   Width="178">
+              <Image.Clip>
+                <RectangleGeometry Rect="0,0,158,249"
+                                   RadiusX="25"
+                                   RadiusY="25">
+                </RectangleGeometry>
+              </Image.Clip>
+            </Image>
+            <Viewbox.BitmapEffect>
+              <DropShadowBitmapEffect x:Name="DropShadowEffect4P3_1" />
+            </Viewbox.BitmapEffect>
+            <Viewbox.RenderTransform>
+              <TranslateTransform x:Name="Translate4P3_1" />
+            </Viewbox.RenderTransform>
+            <Viewbox.Triggers>
+              <EventTrigger RoutedEvent="Mouse.MouseEnter">
+                <BeginStoryboard>
+                  <Storyboard>
+                    <DoubleAnimation Storyboard.TargetName="DropShadowEffect4P3_1"
+                                     Storyboard.TargetProperty="ShadowDepth"
+                                     Duration="0:0:0.5"
+                                     From="0"
+                                     To="2"
+                                     BeginTime="0:0:0" />
+                    <DoubleAnimation Storyboard.TargetName="Translate4P3_1"
+                                     Storyboard.TargetProperty="X"
+                                     Duration="0:0:1"
+                                     From="0"
+                                     To="-320"
+                                     BeginTime="0:0:0" />
+                    <DoubleAnimation Storyboard.TargetName="Translate4P3_1"
+                                     Storyboard.TargetProperty="Y"
+                                     Duration="0:0:1"
+                                     From="0"
+                                     To="370"
+                                     BeginTime="0:0:0" />
+                  </Storyboard>
+                </BeginStoryboard>
+              </EventTrigger>
+            </Viewbox.Triggers>
+          </Viewbox>
+          --><!-- Card Animations Player4 --><!--
+          <Viewbox Height="160"
+                   Width="100"
+                   Canvas.Top="24"
+                   Canvas.Left="58">
+            <Image Source="Images/Card.jpg"
+                   Height="283"
+                   Width="178">
+              <Image.Clip>
+                <RectangleGeometry Rect="0,0,158,249"
+                                   RadiusX="25"
+                                   RadiusY="25">
+                </RectangleGeometry>
+              </Image.Clip>
+            </Image>
+            <Viewbox.BitmapEffect>
+              <DropShadowBitmapEffect x:Name="DropShadowEffect4P4_1" />
+            </Viewbox.BitmapEffect>
+            <Viewbox.RenderTransform>
+              <TranslateTransform x:Name="Translate4P4_1" />
+            </Viewbox.RenderTransform>
+            <Viewbox.Triggers>
+              <EventTrigger RoutedEvent="Mouse.MouseEnter">
+                <BeginStoryboard>
+                  <Storyboard>
+                    <DoubleAnimation Storyboard.TargetName="DropShadowEffect4P4_1"
+                                     Storyboard.TargetProperty="ShadowDepth"
+                                     Duration="0:0:0.5"
+                                     From="0"
+                                     To="2"
+                                     BeginTime="0:0:0" />
+                    <DoubleAnimation Storyboard.TargetName="Translate4P4_1"
+                                     Storyboard.TargetProperty="X"
+                                     Duration="0:0:1"
+                                     From="0"
+                                     To="120"
+                                     BeginTime="0:0:0" />
+                    <DoubleAnimation Storyboard.TargetName="Translate4P4_1"
+                                     Storyboard.TargetProperty="Y"
+                                     Duration="0:0:1"
+                                     From="0"
+                                     To="370"
+                                     BeginTime="0:0:0" />
+                  </Storyboard>
+                </BeginStoryboard>
+              </EventTrigger>
+            </Viewbox.Triggers>
+          </Viewbox>
+          --><!-- Card Animations Dealer --><!--
+          <Viewbox Height="160"
+                   Width="100"
+                   Canvas.Top="24"
+                   Canvas.Left="58">
+            <Image Source="Images/Card.jpg"
+                   Height="283"
+                   Width="178">
+              <Image.Clip>
+                <RectangleGeometry Rect="0,0,158,249"
+                                   RadiusX="25"
+                                   RadiusY="25">
+                </RectangleGeometry>
+              </Image.Clip>
+            </Image>
+            <Viewbox.BitmapEffect>
+              <DropShadowBitmapEffect x:Name="DropShadowEffect4PD_1" />
+            </Viewbox.BitmapEffect>
+            <Viewbox.RenderTransform>
+              <TranslateTransform x:Name="Translate4PD_1" />
+            </Viewbox.RenderTransform>
+            <Viewbox.Triggers>
+              <EventTrigger RoutedEvent="Mouse.MouseEnter">
+                <BeginStoryboard>
+                  <Storyboard>
+                    <DoubleAnimation Storyboard.TargetName="DropShadowEffect4PD_1"
+                                     Storyboard.TargetProperty="ShadowDepth"
+                                     Duration="0:0:0.5"
+                                     From="0"
+                                     To="2"
+                                     BeginTime="0:0:0.015" />
+                    <DoubleAnimation Storyboard.TargetName="Translate4PD_1"
+                                     Storyboard.TargetProperty="X"
+                                     Duration="0:0:1"
+                                     From="0"
+                                     To="-305"
+                                     BeginTime="0:0:0.015" />
+                    <DoubleAnimation Storyboard.TargetName="Translate4PD_1"
+                                     Storyboard.TargetProperty="Y"
+                                     Duration="0:0:1"
+                                     From="0"
+                                     To="30"
+                                     BeginTime="0:0:0.015" />
+                  </Storyboard>
+                </BeginStoryboard>
+              </EventTrigger>
+            </Viewbox.Triggers>
+          </Viewbox>
+          --><!-- Card Animations Player1 --><!--
+          <Viewbox Height="160"
+                   Width="100"
+                   Canvas.Top="24"
+                   Canvas.Left="58">
+            <Image Source="Images/Card.jpg"
+                   Height="283"
+                   Width="178">
+              <Image.Clip>
+                <RectangleGeometry Rect="0,0,158,249"
+                                   RadiusX="25"
+                                   RadiusY="25">
+                </RectangleGeometry>
+              </Image.Clip>
+            </Image>
+            <Viewbox.BitmapEffect>
+              <DropShadowBitmapEffect x:Name="DropShadowEffect4P1_2" />
+            </Viewbox.BitmapEffect>
+            <Viewbox.RenderTransform>
+              <TranslateTransform x:Name="Translate4P1_2" />
+            </Viewbox.RenderTransform>
+            <Viewbox.Triggers>
+              <EventTrigger RoutedEvent="Mouse.MouseEnter">
+                <BeginStoryboard>
+                  <Storyboard>
+                    <DoubleAnimation Storyboard.TargetName="DropShadowEffect4P1_2"
+                                     Storyboard.TargetProperty="ShadowDepth"
+                                     Duration="0:0:0.5"
+                                     From="0"
+                                     To="2"
+                                     BeginTime="0:0:0" />
+                    <DoubleAnimation Storyboard.TargetName="Translate4P1_2"
+                                     Storyboard.TargetProperty="X"
+                                     Duration="0:0:1"
+                                     From="0"
+                                     To="-560"
+                                     BeginTime="0:0:0" />
+                    <DoubleAnimation Storyboard.TargetName="Translate4P1_2"
+                                     Storyboard.TargetProperty="Y"
+                                     Duration="0:0:1"
+                                     From="0"
+                                     To="365"
+                                     BeginTime="0:0:0" />
+                  </Storyboard>
+                </BeginStoryboard>
+              </EventTrigger>
+            </Viewbox.Triggers>
+          </Viewbox>
+          --><!-- Card Animations Player2 --><!--
+          <Viewbox Height="160"
+                   Width="100"
+                   Canvas.Top="24"
+                   Canvas.Left="58">
+            <Image Source="Images/Card.jpg"
+                   Height="283"
+                   Width="178">
+              <Image.Clip>
+                <RectangleGeometry Rect="0,0,158,249"
+                                   RadiusX="25"
+                                   RadiusY="25">
+                </RectangleGeometry>
+              </Image.Clip>
+            </Image>
+            <Viewbox.BitmapEffect>
+              <DropShadowBitmapEffect x:Name="DropShadowEffect4P2_2" />
+            </Viewbox.BitmapEffect>
+            <Viewbox.RenderTransform>
+              <TranslateTransform x:Name="Translate4P2_2" />
+            </Viewbox.RenderTransform>
+            <Viewbox.Triggers>
+              <EventTrigger RoutedEvent="Mouse.MouseEnter">
+                <BeginStoryboard>
+                  <Storyboard>
+                    <DoubleAnimation Storyboard.TargetName="DropShadowEffect4P2_2"
+                                     Storyboard.TargetProperty="ShadowDepth"
+                                     Duration="0:0:0.5"
+                                     From="0"
+                                     To="2"
+                                     BeginTime="0:0:0" />
+                    <DoubleAnimation Storyboard.TargetName="Translate4P2_2"
+                                     Storyboard.TargetProperty="X"
+                                     Duration="0:0:1"
+                                     From="0"
+                                     To="-120"
+                                     BeginTime="0:0:0" />
+                    <DoubleAnimation Storyboard.TargetName="Translate4P2_2"
+                                     Storyboard.TargetProperty="Y"
+                                     Duration="0:0:1"
+                                     From="0"
+                                     To="365"
+                                     BeginTime="0:0:0" />
+                  </Storyboard>
+                </BeginStoryboard>
+              </EventTrigger>
+            </Viewbox.Triggers>
+          </Viewbox>
+          --><!-- Card Animations Player3 --><!--
+          <Viewbox Height="160"
+                   Width="100"
+                   Canvas.Top="24"
+                   Canvas.Left="58">
+            <Image Source="Images/Card.jpg"
+                   Height="283"
+                   Width="178">
+              <Image.Clip>
+                <RectangleGeometry Rect="0,0,158,249"
+                                   RadiusX="25"
+                                   RadiusY="25">
+                </RectangleGeometry>
+              </Image.Clip>
+            </Image>
+            <Viewbox.BitmapEffect>
+              <DropShadowBitmapEffect x:Name="DropShadowEffect4P3_2" />
+            </Viewbox.BitmapEffect>
+            <Viewbox.RenderTransform>
+              <TranslateTransform x:Name="Translate4P3_2" />
+            </Viewbox.RenderTransform>
+            <Viewbox.Triggers>
+              <EventTrigger RoutedEvent="Mouse.MouseEnter">
+                <BeginStoryboard>
+                  <Storyboard>
+                    <DoubleAnimation Storyboard.TargetName="DropShadowEffect4P3_2"
+                                     Storyboard.TargetProperty="ShadowDepth"
+                                     Duration="0:0:0.5"
+                                     From="0"
+                                     To="2"
+                                     BeginTime="0:0:0" />
+                    <DoubleAnimation Storyboard.TargetName="Translate4P3_2"
+                                     Storyboard.TargetProperty="X"
+                                     Duration="0:0:1"
+                                     From="0"
+                                     To="-340"
+                                     BeginTime="0:0:0" />
+                    <DoubleAnimation Storyboard.TargetName="Translate4P3_2"
+                                     Storyboard.TargetProperty="Y"
+                                     Duration="0:0:1"
+                                     From="0"
+                                     To="365"
+                                     BeginTime="0:0:0" />
+                  </Storyboard>
+                </BeginStoryboard>
+              </EventTrigger>
+            </Viewbox.Triggers>
+          </Viewbox>
+          --><!-- Card Animations Player4 --><!--
+          <Viewbox Height="160"
+                   Width="100"
+                   Canvas.Top="24"
+                   Canvas.Left="58">
+            <Image Source="Images/Card.jpg"
+                   Height="283"
+                   Width="178">
+              <Image.Clip>
+                <RectangleGeometry Rect="0,0,158,249"
+                                   RadiusX="25"
+                                   RadiusY="25">
+                </RectangleGeometry>
+              </Image.Clip>
+            </Image>
+            <Viewbox.BitmapEffect>
+              <DropShadowBitmapEffect x:Name="DropShadowEffect4P4_2" />
+            </Viewbox.BitmapEffect>
+            <Viewbox.RenderTransform>
+              <TranslateTransform x:Name="Translate4P4_2" />
+            </Viewbox.RenderTransform>
+            <Viewbox.Triggers>
+              <EventTrigger RoutedEvent="Mouse.MouseEnter">
+                <BeginStoryboard>
+                  <Storyboard>
+                    <DoubleAnimation Storyboard.TargetName="DropShadowEffect4P4_2"
+                                     Storyboard.TargetProperty="ShadowDepth"
+                                     Duration="0:0:0.5"
+                                     From="0"
+                                     To="2"
+                                     BeginTime="0:0:0" />
+                    <DoubleAnimation Storyboard.TargetName="Translate4P4_2"
+                                     Storyboard.TargetProperty="X"
+                                     Duration="0:0:1"
+                                     From="0"
+                                     To="100"
+                                     BeginTime="0:0:0" />
+                    <DoubleAnimation Storyboard.TargetName="Translate4P4_2"
+                                     Storyboard.TargetProperty="Y"
+                                     Duration="0:0:1"
+                                     From="0"
+                                     To="365"
+                                     BeginTime="0:0:0" />
+                  </Storyboard>
+                </BeginStoryboard>
+              </EventTrigger>
+            </Viewbox.Triggers>
+          </Viewbox>
+          --><!-- Card Animations Dealer --><!--
+          <Viewbox Height="160"
+                   Width="100"
+                   Canvas.Top="24"
+                   Canvas.Left="58">
+            <Image Source="Images/Card.jpg"
+                   Height="283"
+                   Width="178">
+              <Image.Clip>
+                <RectangleGeometry Rect="0,0,158,249"
+                                   RadiusX="25"
+                                   RadiusY="25">
+                </RectangleGeometry>
+              </Image.Clip>
+            </Image>
+            <Viewbox.BitmapEffect>
+              <DropShadowBitmapEffect x:Name="DropShadowEffect4PD_2" />
+            </Viewbox.BitmapEffect>
+            <Viewbox.RenderTransform>
+              <TranslateTransform x:Name="Translate4PD_2" />
+            </Viewbox.RenderTransform>
+            <Viewbox.Triggers>
+              <EventTrigger RoutedEvent="Mouse.MouseEnter">
+                <BeginStoryboard>
+                  <Storyboard>
+                    <DoubleAnimation Storyboard.TargetName="DropShadowEffect4PD_2"
+                                     Storyboard.TargetProperty="ShadowDepth"
+                                     Duration="0:0:0.5"
+                                     From="0"
+                                     To="2"
+                                     BeginTime="0:0:0.015" />
+                    <DoubleAnimation Storyboard.TargetName="Translate4PD_2"
+                                     Storyboard.TargetProperty="X"
+                                     Duration="0:0:1"
+                                     From="0"
+                                     To="-325"
+                                     BeginTime="0:0:0.015" />
+                    <DoubleAnimation Storyboard.TargetName="Translate4PD_2"
+                                     Storyboard.TargetProperty="Y"
+                                     Duration="0:0:1"
+                                     From="0"
+                                     To="25"
+                                     BeginTime="0:0:0.015" />
+                  </Storyboard>
+                </BeginStoryboard>
+              </EventTrigger>
+            </Viewbox.Triggers>
+          </Viewbox>
+        </Grid>
+
+        <Grid Name="FivePlayersSelected">
+          --><!-- Card Animations Player1 --><!--
+          <Viewbox Height="160"
+                   Width="100"
+                   Canvas.Top="24"
+                   Canvas.Left="58">
+            <Image Source="Images/Card.jpg"
+                   Height="283"
+                   Width="178">
+              <Image.Clip>
+                <RectangleGeometry Rect="0,0,158,249"
+                                   RadiusX="25"
+                                   RadiusY="25">
+                </RectangleGeometry>
+              </Image.Clip>
+            </Image>
+            <Viewbox.BitmapEffect>
+              <DropShadowBitmapEffect x:Name="DropShadowEffect5P1_1" />
+            </Viewbox.BitmapEffect>
+            <Viewbox.RenderTransform>
+              <TranslateTransform x:Name="Translate5P1_1" />
+            </Viewbox.RenderTransform>
+            <Viewbox.Triggers>
+              <EventTrigger RoutedEvent="Mouse.MouseEnter">
+                <BeginStoryboard>
+                  <Storyboard>
+                    <DoubleAnimation Storyboard.TargetName="DropShadowEffect5P1_1"
+                                     Storyboard.TargetProperty="ShadowDepth"
+                                     Duration="0:0:0.5"
+                                     From="0"
+                                     To="2"
+                                     BeginTime="0:0:0" />
+                    <DoubleAnimation Storyboard.TargetName="Translate5P1_1"
+                                     Storyboard.TargetProperty="X"
+                                     Duration="0:0:1"
+                                     From="0"
+                                     To="270"
+                                     BeginTime="0:0:0" />
+                    <DoubleAnimation Storyboard.TargetName="Translate5P1_1"
+                                     Storyboard.TargetProperty="Y"
+                                     Duration="0:0:1"
+                                     From="0"
+                                     To="370"
+                                     BeginTime="0:0:0" />
+                  </Storyboard>
+                </BeginStoryboard>
+              </EventTrigger>
+            </Viewbox.Triggers>
+          </Viewbox>
+          --><!-- Card Animations Player2 --><!--
+          <Viewbox Height="160"
+                   Width="100"
+                   Canvas.Top="24"
+                   Canvas.Left="58">
+            <Image Source="Images/Card.jpg"
+                   Height="283"
+                   Width="178">
+              <Image.Clip>
+                <RectangleGeometry Rect="0,0,158,249"
+                                   RadiusX="25"
+                                   RadiusY="25">
+                </RectangleGeometry>
+              </Image.Clip>
+            </Image>
+            <Viewbox.BitmapEffect>
+              <DropShadowBitmapEffect x:Name="DropShadowEffect5P2_1" />
+            </Viewbox.BitmapEffect>
+            <Viewbox.RenderTransform>
+              <TranslateTransform x:Name="Translate5P2_1" />
+            </Viewbox.RenderTransform>
+            <Viewbox.Triggers>
+              <EventTrigger RoutedEvent="Mouse.MouseEnter">
+                <BeginStoryboard>
+                  <Storyboard>
+                    <DoubleAnimation Storyboard.TargetName="DropShadowEffect5P2_1"
+                                     Storyboard.TargetProperty="ShadowDepth"
+                                     Duration="0:0:0.5"
+                                     From="0"
+                                     To="2"
+                                     BeginTime="0:0:0" />
+                    <DoubleAnimation Storyboard.TargetName="Translate5P2_1"
+                                     Storyboard.TargetProperty="X"
+                                     Duration="0:0:1"
+                                     From="0"
+                                     To="50"
+                                     BeginTime="0:0:0" />
+                    <DoubleAnimation Storyboard.TargetName="Translate5P2_1"
+                                     Storyboard.TargetProperty="Y"
+                                     Duration="0:0:1"
+                                     From="0"
+                                     To="370"
+                                     BeginTime="0:0:0" />
+                  </Storyboard>
+                </BeginStoryboard>
+              </EventTrigger>
+            </Viewbox.Triggers>
+          </Viewbox>
+          --><!-- Card Animations Player3 --><!--
+          <Viewbox Height="160"
+                   Width="100"
+                   Canvas.Top="24"
+                   Canvas.Left="58">
+            <Image Source="Images/Card.jpg"
+                   Height="283"
+                   Width="178">
+              <Image.Clip>
+                <RectangleGeometry Rect="0,0,158,249"
+                                   RadiusX="25"
+                                   RadiusY="25">
+                </RectangleGeometry>
+              </Image.Clip>
+            </Image>
+            <Viewbox.BitmapEffect>
+              <DropShadowBitmapEffect x:Name="DropShadowEffect5P3_1" />
+            </Viewbox.BitmapEffect>
+            <Viewbox.RenderTransform>
+              <TranslateTransform x:Name="Translate5P3_1" />
+            </Viewbox.RenderTransform>
+            <Viewbox.Triggers>
+              <EventTrigger RoutedEvent="Mouse.MouseEnter">
+                <BeginStoryboard>
+                  <Storyboard>
+                    <DoubleAnimation Storyboard.TargetName="DropShadowEffect5P3_1"
+                                     Storyboard.TargetProperty="ShadowDepth"
+                                     Duration="0:0:0.5"
+                                     From="0"
+                                     To="2"
+                                     BeginTime="0:0:0.005" />
+                    <DoubleAnimation Storyboard.TargetName="Translate5P3_1"
+                                     Storyboard.TargetProperty="X"
+                                     Duration="0:0:1"
+                                     From="0"
+                                     To="-170"
+                                     BeginTime="0:0:0.005" />
+                    <DoubleAnimation Storyboard.TargetName="Translate5P3_1"
+                                     Storyboard.TargetProperty="Y"
+                                     Duration="0:0:1"
+                                     From="0"
+                                     To="370"
+                                     BeginTime="0:0:0.005" />
+                  </Storyboard>
+                </BeginStoryboard>
+              </EventTrigger>
+            </Viewbox.Triggers>
+          </Viewbox>
+          --><!-- Card Animations Player4 --><!--
+          <Viewbox Height="160"
+                   Width="100"
+                   Canvas.Top="24"
+                   Canvas.Left="58">
+            <Image Source="Images/Card.jpg"
+                   Height="283"
+                   Width="178">
+              <Image.Clip>
+                <RectangleGeometry Rect="0,0,158,249"
+                                   RadiusX="25"
+                                   RadiusY="25">
+                </RectangleGeometry>
+              </Image.Clip>
+            </Image>
+            <Viewbox.BitmapEffect>
+              <DropShadowBitmapEffect x:Name="DropShadowEffect5P4_1" />
+            </Viewbox.BitmapEffect>
+            <Viewbox.RenderTransform>
+              <TranslateTransform x:Name="Translate5P4_1" />
+            </Viewbox.RenderTransform>
+            <Viewbox.Triggers>
+              <EventTrigger RoutedEvent="Mouse.MouseEnter">
+                <BeginStoryboard>
+                  <Storyboard>
+                    <DoubleAnimation Storyboard.TargetName="DropShadowEffect5P4_1"
+                                     Storyboard.TargetProperty="ShadowDepth"
+                                     Duration="0:0:0.5"
+                                     From="0"
+                                     To="2"
+                                     BeginTime="0:0:0.01" />
+                    <DoubleAnimation Storyboard.TargetName="Translate5P4_1"
+                                     Storyboard.TargetProperty="X"
+                                     Duration="0:0:1"
+                                     From="0"
+                                     To="-390"
+                                     BeginTime="0:0:0.01" />
+                    <DoubleAnimation Storyboard.TargetName="Translate5P4_1"
+                                     Storyboard.TargetProperty="Y"
+                                     Duration="0:0:1"
+                                     From="0"
+                                     To="370"
+                                     BeginTime="0:0:0.01" />
+                  </Storyboard>
+                </BeginStoryboard>
+              </EventTrigger>
+            </Viewbox.Triggers>
+          </Viewbox>
+          --><!-- Card Animations Player5 --><!--
+          <Viewbox Height="160"
+                   Width="100"
+                   Canvas.Top="24"
+                   Canvas.Left="58">
+            <Image Source="Images/Card.jpg"
+                   Height="283"
+                   Width="178">
+              <Image.Clip>
+                <RectangleGeometry Rect="0,0,158,249"
+                                   RadiusX="25"
+                                   RadiusY="25">
+                </RectangleGeometry>
+              </Image.Clip>
+            </Image>
+            <Viewbox.BitmapEffect>
+              <DropShadowBitmapEffect x:Name="DropShadowEffect5P5_1" />
+            </Viewbox.BitmapEffect>
+            <Viewbox.RenderTransform>
+              <TranslateTransform x:Name="Translate5P5_1" />
+            </Viewbox.RenderTransform>
+            <Viewbox.Triggers>
+              <EventTrigger RoutedEvent="Mouse.MouseEnter">
+                <BeginStoryboard>
+                  <Storyboard>
+                    <DoubleAnimation Storyboard.TargetName="DropShadowEffect5P5_1"
+                                     Storyboard.TargetProperty="ShadowDepth"
+                                     Duration="0:0:0.5"
+                                     From="0"
+                                     To="2"
+                                     BeginTime="0:0:0.01" />
+                    <DoubleAnimation Storyboard.TargetName="Translate5P5_1"
+                                     Storyboard.TargetProperty="X"
+                                     Duration="0:0:1"
+                                     From="0"
+                                     To="-610"
+                                     BeginTime="0:0:0.01" />
+                    <DoubleAnimation Storyboard.TargetName="Translate5P5_1"
+                                     Storyboard.TargetProperty="Y"
+                                     Duration="0:0:1"
+                                     From="0"
+                                     To="370"
+                                     BeginTime="0:0:0.01" />
+                  </Storyboard>
+                </BeginStoryboard>
+              </EventTrigger>
+            </Viewbox.Triggers>
+          </Viewbox>
+          --><!-- Card Animations Dealer --><!--
+          <Viewbox Height="160"
+                   Width="100"
+                   Canvas.Top="24"
+                   Canvas.Left="58">
+            <Image Source="Images/Card.jpg"
+                   Height="283"
+                   Width="178">
+              <Image.Clip>
+                <RectangleGeometry Rect="0,0,158,249"
+                                   RadiusX="25"
+                                   RadiusY="25">
+                </RectangleGeometry>
+              </Image.Clip>
+            </Image>
+            <Viewbox.BitmapEffect>
+              <DropShadowBitmapEffect x:Name="DropShadowEffect5PD_1" />
+            </Viewbox.BitmapEffect>
+            <Viewbox.RenderTransform>
+              <TranslateTransform x:Name="Translate5PD_1" />
+            </Viewbox.RenderTransform>
+            <Viewbox.Triggers>
+              <EventTrigger RoutedEvent="Mouse.MouseEnter">
+                <BeginStoryboard>
+                  <Storyboard>
+                    <DoubleAnimation Storyboard.TargetName="DropShadowEffect5PD_1"
+                                     Storyboard.TargetProperty="ShadowDepth"
+                                     Duration="0:0:0.5"
+                                     From="0"
+                                     To="2"
+                                     BeginTime="0:0:0.015" />
+                    <DoubleAnimation Storyboard.TargetName="Translate5PD_1"
+                                     Storyboard.TargetProperty="X"
+                                     Duration="0:0:1"
+                                     From="0"
+                                     To="-305"
+                                     BeginTime="0:0:0.015" />
+                    <DoubleAnimation Storyboard.TargetName="Translate5PD_1"
+                                     Storyboard.TargetProperty="Y"
+                                     Duration="0:0:1"
+                                     From="0"
+                                     To="30"
+                                     BeginTime="0:0:0.015" />
+                  </Storyboard>
+                </BeginStoryboard>
+              </EventTrigger>
+            </Viewbox.Triggers>
+          </Viewbox>
+          --><!-- Card Animations Player1 --><!--
+          <Viewbox Height="160"
+                   Width="100"
+                   Canvas.Top="24"
+                   Canvas.Left="58">
+            <Image Source="Images/Card.jpg"
+                   Height="283"
+                   Width="178">
+              <Image.Clip>
+                <RectangleGeometry Rect="0,0,158,249"
+                                   RadiusX="25"
+                                   RadiusY="25">
+                </RectangleGeometry>
+              </Image.Clip>
+            </Image>
+            <Viewbox.BitmapEffect>
+              <DropShadowBitmapEffect x:Name="DropShadowEffect5P1_2" />
+            </Viewbox.BitmapEffect>
+            <Viewbox.RenderTransform>
+              <TranslateTransform x:Name="Translate5P1_2" />
+            </Viewbox.RenderTransform>
+            <Viewbox.Triggers>
+              <EventTrigger RoutedEvent="Mouse.MouseEnter">
+                <BeginStoryboard>
+                  <Storyboard>
+                    <DoubleAnimation Storyboard.TargetName="DropShadowEffect5P1_2"
+                                     Storyboard.TargetProperty="ShadowDepth"
+                                     Duration="0:0:0.5"
+                                     From="0"
+                                     To="2"
+                                     BeginTime="0:0:0" />
+                    <DoubleAnimation Storyboard.TargetName="Translate5P1_2"
+                                     Storyboard.TargetProperty="X"
+                                     Duration="0:0:1"
+                                     From="0"
+                                     To="250"
+                                     BeginTime="0:0:0" />
+                    <DoubleAnimation Storyboard.TargetName="Translate5P1_2"
+                                     Storyboard.TargetProperty="Y"
+                                     Duration="0:0:1"
+                                     From="0"
+                                     To="365"
+                                     BeginTime="0:0:0" />
+                  </Storyboard>
+                </BeginStoryboard>
+              </EventTrigger>
+            </Viewbox.Triggers>
+          </Viewbox>
+          --><!-- Card Animations Player2 --><!--
+          <Viewbox Height="160"
+                   Width="100"
+                   Canvas.Top="24"
+                   Canvas.Left="58">
+            <Image Source="Images/Card.jpg"
+                   Height="283"
+                   Width="178">
+              <Image.Clip>
+                <RectangleGeometry Rect="0,0,158,249"
+                                   RadiusX="25"
+                                   RadiusY="25">
+                </RectangleGeometry>
+              </Image.Clip>
+            </Image>
+            <Viewbox.BitmapEffect>
+              <DropShadowBitmapEffect x:Name="DropShadowEffect5P2_2" />
+            </Viewbox.BitmapEffect>
+            <Viewbox.RenderTransform>
+              <TranslateTransform x:Name="Translate5P2_2" />
+            </Viewbox.RenderTransform>
+            <Viewbox.Triggers>
+              <EventTrigger RoutedEvent="Mouse.MouseEnter">
+                <BeginStoryboard>
+                  <Storyboard>
+                    <DoubleAnimation Storyboard.TargetName="DropShadowEffect5P2_2"
+                                     Storyboard.TargetProperty="ShadowDepth"
+                                     Duration="0:0:0.5"
+                                     From="0"
+                                     To="2"
+                                     BeginTime="0:0:0" />
+                    <DoubleAnimation Storyboard.TargetName="Translate5P2_2"
+                                     Storyboard.TargetProperty="X"
+                                     Duration="0:0:1"
+                                     From="0"
+                                     To="30"
+                                     BeginTime="0:0:0" />
+                    <DoubleAnimation Storyboard.TargetName="Translate5P2_2"
+                                     Storyboard.TargetProperty="Y"
+                                     Duration="0:0:1"
+                                     From="0"
+                                     To="365"
+                                     BeginTime="0:0:0" />
+                  </Storyboard>
+                </BeginStoryboard>
+              </EventTrigger>
+            </Viewbox.Triggers>
+          </Viewbox>
+          --><!-- Card Animations Player3 --><!--
+          <Viewbox Height="160"
+                   Width="100"
+                   Canvas.Top="24"
+                   Canvas.Left="58">
+            <Image Source="Images/Card.jpg"
+                   Height="283"
+                   Width="178">
+              <Image.Clip>
+                <RectangleGeometry Rect="0,0,158,249"
+                                   RadiusX="25"
+                                   RadiusY="25">
+                </RectangleGeometry>
+              </Image.Clip>
+            </Image>
+            <Viewbox.BitmapEffect>
+              <DropShadowBitmapEffect x:Name="DropShadowEffect5P3_2" />
+            </Viewbox.BitmapEffect>
+            <Viewbox.RenderTransform>
+              <TranslateTransform x:Name="Translate5P3_2" />
+            </Viewbox.RenderTransform>
+            <Viewbox.Triggers>
+              <EventTrigger RoutedEvent="Mouse.MouseEnter">
+                <BeginStoryboard>
+                  <Storyboard>
+                    <DoubleAnimation Storyboard.TargetName="DropShadowEffect5P3_2"
+                                     Storyboard.TargetProperty="ShadowDepth"
+                                     Duration="0:0:0.5"
+                                     From="0"
+                                     To="2"
+                                     BeginTime="0:0:0.005" />
+                    <DoubleAnimation Storyboard.TargetName="Translate5P3_2"
+                                     Storyboard.TargetProperty="X"
+                                     Duration="0:0:1"
+                                     From="0"
+                                     To="-190"
+                                     BeginTime="0:0:0.005" />
+                    <DoubleAnimation Storyboard.TargetName="Translate5P3_2"
+                                     Storyboard.TargetProperty="Y"
+                                     Duration="0:0:1"
+                                     From="0"
+                                     To="365"
+                                     BeginTime="0:0:0.005" />
+                  </Storyboard>
+                </BeginStoryboard>
+              </EventTrigger>
+            </Viewbox.Triggers>
+          </Viewbox>
+          --><!-- Card Animations Player4 --><!--
+          <Viewbox Height="160"
+                   Width="100"
+                   Canvas.Top="24"
+                   Canvas.Left="58">
+            <Image Source="Images/Card.jpg"
+                   Height="283"
+                   Width="178">
+              <Image.Clip>
+                <RectangleGeometry Rect="0,0,158,249"
+                                   RadiusX="25"
+                                   RadiusY="25">
+                </RectangleGeometry>
+              </Image.Clip>
+            </Image>
+            <Viewbox.BitmapEffect>
+              <DropShadowBitmapEffect x:Name="DropShadowEffect5P4_2" />
+            </Viewbox.BitmapEffect>
+            <Viewbox.RenderTransform>
+              <TranslateTransform x:Name="Translate5P4_2" />
+            </Viewbox.RenderTransform>
+            <Viewbox.Triggers>
+              <EventTrigger RoutedEvent="Mouse.MouseEnter">
+                <BeginStoryboard>
+                  <Storyboard>
+                    <DoubleAnimation Storyboard.TargetName="DropShadowEffect5P4_2"
+                                     Storyboard.TargetProperty="ShadowDepth"
+                                     Duration="0:0:0.5"
+                                     From="0"
+                                     To="2"
+                                     BeginTime="0:0:0.01" />
+                    <DoubleAnimation Storyboard.TargetName="Translate5P4_2"
+                                     Storyboard.TargetProperty="X"
+                                     Duration="0:0:1"
+                                     From="0"
+                                     To="-410"
+                                     BeginTime="0:0:0.01" />
+                    <DoubleAnimation Storyboard.TargetName="Translate5P4_2"
+                                     Storyboard.TargetProperty="Y"
+                                     Duration="0:0:1"
+                                     From="0"
+                                     To="365"
+                                     BeginTime="0:0:0.01" />
+                  </Storyboard>
+                </BeginStoryboard>
+              </EventTrigger>
+            </Viewbox.Triggers>
+          </Viewbox>
+          --><!-- Card Animations Player5 --><!--
+          <Viewbox Height="160"
+                   Width="100"
+                   Canvas.Top="24"
+                   Canvas.Left="58">
+            <Image Source="Images/Card.jpg"
+                   Height="283"
+                   Width="178">
+              <Image.Clip>
+                <RectangleGeometry Rect="0,0,158,249"
+                                   RadiusX="25"
+                                   RadiusY="25">
+                </RectangleGeometry>
+              </Image.Clip>
+            </Image>
+            <Viewbox.BitmapEffect>
+              <DropShadowBitmapEffect x:Name="DropShadowEffect5P5_2" />
+            </Viewbox.BitmapEffect>
+            <Viewbox.RenderTransform>
+              <TranslateTransform x:Name="Translate5P5_2" />
+            </Viewbox.RenderTransform>
+            <Viewbox.Triggers>
+              <EventTrigger RoutedEvent="Mouse.MouseEnter">
+                <BeginStoryboard>
+                  <Storyboard>
+                    <DoubleAnimation Storyboard.TargetName="DropShadowEffect5P5_2"
+                                     Storyboard.TargetProperty="ShadowDepth"
+                                     Duration="0:0:0.5"
+                                     From="0"
+                                     To="2"
+                                     BeginTime="0:0:0.01" />
+                    <DoubleAnimation Storyboard.TargetName="Translate5P5_2"
+                                     Storyboard.TargetProperty="X"
+                                     Duration="0:0:1"
+                                     From="0"
+                                     To="-630"
+                                     BeginTime="0:0:0.01" />
+                    <DoubleAnimation Storyboard.TargetName="Translate5P5_2"
+                                     Storyboard.TargetProperty="Y"
+                                     Duration="0:0:1"
+                                     From="0"
+                                     To="365"
+                                     BeginTime="0:0:0.01" />
+                  </Storyboard>
+                </BeginStoryboard>
+              </EventTrigger>
+            </Viewbox.Triggers>
+          </Viewbox>
+          --><!-- Card Animations Dealer --><!--
+          <Viewbox Height="160"
+                   Width="100"
+                   Canvas.Top="24"
+                   Canvas.Left="58">
+            <Image Source="Images/Card.jpg"
+                   Height="283"
+                   Width="178">
+              <Image.Clip>
+                <RectangleGeometry Rect="0,0,158,249"
+                                   RadiusX="25"
+                                   RadiusY="25">
+                </RectangleGeometry>
+              </Image.Clip>
+            </Image>
+            <Viewbox.BitmapEffect>
+              <DropShadowBitmapEffect x:Name="DropShadowEffect5PD_2" />
+            </Viewbox.BitmapEffect>
+            <Viewbox.RenderTransform>
+              <TranslateTransform x:Name="Translate5PD_2" />
+            </Viewbox.RenderTransform>
+            <Viewbox.Triggers>
+              <EventTrigger RoutedEvent="Mouse.MouseEnter">
+                <BeginStoryboard>
+                  <Storyboard>
+                    <DoubleAnimation Storyboard.TargetName="DropShadowEffect5PD_2"
+                                     Storyboard.TargetProperty="ShadowDepth"
+                                     Duration="0:0:0.5"
+                                     From="0"
+                                     To="2"
+                                     BeginTime="0:0:0.015" />
+                    <DoubleAnimation Storyboard.TargetName="Translate5PD_2"
+                                     Storyboard.TargetProperty="X"
+                                     Duration="0:0:1"
+                                     From="0"
+                                     To="-325"
+                                     BeginTime="0:0:0.015" />
+                    <DoubleAnimation Storyboard.TargetName="Translate5PD_2"
+                                     Storyboard.TargetProperty="Y"
+                                     Duration="0:0:1"
+                                     From="0"
+                                     To="25"
+                                     BeginTime="0:0:0.015" />
+                  </Storyboard>
+                </BeginStoryboard>
+              </EventTrigger>
+            </Viewbox.Triggers>
+          </Viewbox>
+        </Grid>-->
+      </Canvas>
+    </DataTemplate>
+    <DataTemplate DataType="{x:Type vms:PersonVM}">
+      <StackPanel Orientation="Horizontal"
+                  Background="Transparent">
+        <TextBlock Name="PlayerNameTextBlock"
+                   Text="{Binding PlayerNumber, StringFormat=Player Number {0}:}"
+                   FontSize="20"
+                   Margin="0,0,10,5"
+                   HorizontalAlignment="Right"
+                   VerticalAlignment="Center" />
+        <TextBox Name="PlayerNameTextBox"
+                 Opacity="0.65"
+                 Height="30"
+                 Width="300"
+                 FontSize="20"
+                 Margin="5"
+                 HorizontalAlignment="Left"
+                 VerticalContentAlignment="Center"
+                 Cursor="IBeam"
+                 Text="{Binding PlayerName, UpdateSourceTrigger=PropertyChanged}" />
+      </StackPanel>
+    </DataTemplate>
+  </Window.Resources>
+  <Grid>
+    <Grid.ColumnDefinitions>
+      <ColumnDefinition />
+      <ColumnDefinition />
+      <ColumnDefinition />
+      <ColumnDefinition />
+      <ColumnDefinition />
+    </Grid.ColumnDefinitions>
+    <Grid.RowDefinitions>
+      <RowDefinition Height="2*" />
+      <RowDefinition Height="1*" />
+      <RowDefinition Height="3*" />
+    </Grid.RowDefinitions>
+    <CheckBox Height="25"
+              Width="100"
+              Content="TestCheckBox"/>
+    <Canvas Name="TableTop"
+            Opacity="0.5"
+            Grid.ColumnSpan="5"
+            Grid.RowSpan="3">
+      <Canvas.Background>
+        <RadialGradientBrush GradientOrigin="-0.09,1.091"
+                             RadiusY="0.669"
+                             RadiusX="0.669"
+                             Center="0.499,0.494">
+          <GradientStop Color="#B7000000"
+                        Offset="0.949" />
+          <GradientStop Color="Transparent" />
+        </RadialGradientBrush>
+      </Canvas.Background>
+    </Canvas>
+    <ContentControl Name="Deck"
+                    Grid.Column="3"
+                    Grid.Row="0"
+                    Content="{Binding Deck}" />
+    <TextBlock Name="NumPlayersLabel"
+               Grid.Column="1"
+               Grid.ColumnSpan="2"
+               Grid.Row="1"
+               FontSize="18"
+               TextWrapping="NoWrap"
+               Text="Num of Players (1-5):"
+               Margin="0,20,40,20"
+               HorizontalAlignment="Center"
+               VerticalAlignment="Center"
+               Visibility="{Binding NumPlayersTxtBox, NotifyOnTargetUpdated=True}">
+      <TextBlock.Triggers>
+        <EventTrigger RoutedEvent="Binding.TargetUpdated">
+          <BeginStoryboard>
+            <Storyboard>
+              <DoubleAnimationUsingKeyFrames Storyboard.TargetProperty="Opacity">
+                <EasingDoubleKeyFrame KeyTime="0:0:0"
+                                      Value="0" />
+                <EasingDoubleKeyFrame KeyTime="0:0:0.75"
+                                      Value="0" />
+                <EasingDoubleKeyFrame KeyTime="0:0:1.25"
+                                      Value="0.75" />
+              </DoubleAnimationUsingKeyFrames>
+            </Storyboard>
+          </BeginStoryboard>
+        </EventTrigger>
+      </TextBlock.Triggers>
+    </TextBlock>
+    <TextBox Name="NumPlayersBox"
+             Text="{Binding NumPlayers}"
+             FontSize="18"
+             Grid.Column="2"
+             Grid.Row="1"
+             Height="30"
+             Width="30"
+             HorizontalAlignment="Center"
+             VerticalAlignment="Center"
+             VerticalContentAlignment="Center"
+             HorizontalContentAlignment="Center"
+             Cursor="IBeam"
+             Visibility="{Binding NumPlayersTxtBox, NotifyOnTargetUpdated=True}">
+      <TextBox.Triggers>
+        <EventTrigger RoutedEvent="Binding.TargetUpdated">
+          <BeginStoryboard>
+            <Storyboard>
+              <DoubleAnimationUsingKeyFrames Storyboard.TargetProperty="Opacity">
+                <EasingDoubleKeyFrame KeyTime="0:0:0"
+                                      Value="0" />
+                <EasingDoubleKeyFrame KeyTime="0:0:0.75"
+                                      Value="0" />
+                <EasingDoubleKeyFrame KeyTime="0:0:1.25"
+                                      Value="0.75" />
+              </DoubleAnimationUsingKeyFrames>
+            </Storyboard>
+          </BeginStoryboard>
+        </EventTrigger>
+      </TextBox.Triggers>
+    </TextBox>
+    <Button Name="NumPlayersNextButton"
+            Content="Next"
+            Grid.Column="2"
+            Grid.Row="2"
+            FontSize="18"
+            Height="35"
+            Width="100"
+            Margin="0,20,0,0"
+            BorderBrush="Transparent"
+            HorizontalAlignment="Center"
+            VerticalAlignment="Top"
+            Command="{Binding CreatePlayersCommand}"
+            Visibility="{Binding NumPlayersTxtBox, NotifyOnTargetUpdated=True}">
+      <Button.Triggers>
+        <EventTrigger RoutedEvent="Binding.TargetUpdated">
+          <BeginStoryboard>
+            <Storyboard>
+              <DoubleAnimationUsingKeyFrames Storyboard.TargetProperty="Opacity">
+                <EasingDoubleKeyFrame KeyTime="0:0:0"
+                                      Value="0" />
+                <EasingDoubleKeyFrame KeyTime="0:0:0.75"
+                                      Value="0" />
+                <EasingDoubleKeyFrame KeyTime="0:0:1.25"
+                                      Value="0.75" />
+              </DoubleAnimationUsingKeyFrames>
+            </Storyboard>
+          </BeginStoryboard>
+        </EventTrigger>
+      </Button.Triggers>
+    </Button>
+    <ItemsControl Name="PlayerNameTextBoxes"
+                  ItemsSource="{Binding Players}"
+                  Grid.Column="1"
+                  Grid.Row="1"
+                  Grid.ColumnSpan="3"
+                  Grid.RowSpan="2"
+                  Background="Transparent"
+                  BorderBrush="Transparent"
+                  Margin="10,0,20,10"
+                  Visibility="{Binding PlayerNameTxtBoxes, NotifyOnTargetUpdated=True}">
+      <ItemsControl.Triggers>
+        <EventTrigger RoutedEvent="Binding.TargetUpdated">
+          <BeginStoryboard>
+            <Storyboard>
+              <DoubleAnimation Storyboard.TargetProperty="Opacity"
+                               Duration="0:0:0.5"
+                               From="0"
+                               To="0.75" />
+            </Storyboard>
+          </BeginStoryboard>
+        </EventTrigger>
+      </ItemsControl.Triggers>
+    </ItemsControl>
+    <Button Name="PlayerNameNextButton"
+            Content="Next"
+            Grid.Column="4"
+            Grid.Row="2"
+            Height="35"
+            Width="100"
+            FontSize="18"
+            BorderBrush="Transparent"
+            Visibility="{Binding PlayerNameTxtBoxes, NotifyOnTargetUpdated=True}"
+            Command="{Binding LayoutPlayersCommand}">
+      <Button.Triggers>
+        <EventTrigger RoutedEvent="Binding.TargetUpdated">
+          <BeginStoryboard>
+            <Storyboard>
+              <DoubleAnimation Storyboard.TargetProperty="Opacity"
+                               Duration="0:0:0.5"
+                               From="0"
+                               To="0.75" />
+            </Storyboard>
+          </BeginStoryboard>
+        </EventTrigger>
+      </Button.Triggers>
+    </Button>
+
+    <!--Card Animations-->
+
+
+    <Button Name="StartGameButton"
+            Content="Start Game"
+            Grid.Column="2"
+            Grid.Row="1"
+            Height="35"
+            Width="110"
+            Margin="0,0,0,-20"
+            FontSize="18"
+            BorderBrush="Transparent"
+            Command="{Binding StartGameCommand}"
+            Visibility="{Binding StartGameButton, NotifyOnTargetUpdated=True}">
+      <Button.Triggers>
+        <EventTrigger RoutedEvent="Binding.TargetUpdated">
+          <BeginStoryboard>
+            <Storyboard>
+              <DoubleAnimation Storyboard.TargetProperty="Opacity"
+                               Duration="0:0:0.5"
+                               From="0"
+                               To="0.75" />
+            </Storyboard>
+          </BeginStoryboard>
+        </EventTrigger>
+      </Button.Triggers>
+    </Button>
+    <Button Name="NextHandButton"
+            Grid.Column="0"
+            Grid.Row="1"
+            HorizontalAlignment="Right"
+            Height="40"
+            Width="130"
+            Margin="0,0,0,-40"
+            FontSize="24"
+            Content="Next Hand"
+            BorderBrush="Transparent"
+            Command="{Binding NextHandCommand}"
+            Visibility="{Binding NextHandButton, NotifyOnTargetUpdated=True}">
+      <Button.Triggers>
+        <EventTrigger RoutedEvent="Binding.TargetUpdated">
+          <BeginStoryboard>
+            <Storyboard>
+              <DoubleAnimation Storyboard.TargetProperty="Opacity"
+                               Duration="0:0:0.5"
+                               From="0"
+                               To="0.75" />
+            </Storyboard>
+          </BeginStoryboard>
+        </EventTrigger>
+      </Button.Triggers>
+    </Button>
+    <Button Name="QuitGameButton"
+            Grid.Column="4"
+            Grid.Row="1"
+            HorizontalAlignment="Left"
+            Height="40"
+            Width="130"
+            Margin="0,0,0,-40"
+            Content="Quit"
+            FontSize="24"
+            BorderBrush="Transparent"
+            Command="{Binding QuitGameCommand}"
+            Visibility="{Binding NextHandButton, NotifyOnTargetUpdated=True}">
+      <Button.Triggers>
+        <EventTrigger RoutedEvent="Binding.TargetUpdated">
+          <BeginStoryboard>
+            <Storyboard>
+              <DoubleAnimation Storyboard.TargetProperty="Opacity"
+                               Duration="0:0:0.5"
+                               From="0"
+                               To="0.75" />
+            </Storyboard>
+          </BeginStoryboard>
+        </EventTrigger>
+      </Button.Triggers>
+    </Button>
+    <UserControl Name="DealersControl"
+                 Grid.Column="1"
+                 Margin="0,20,0,0"
+                 Grid.ColumnSpan="2"
+                 Grid.Row="0"
+                 Content="{Binding Dealer}"
+                 HorizontalAlignment="Center"
+                 Visibility="{Binding PlayerCards, NotifyOnTargetUpdated=True}">
+      <UserControl.Resources>
+        <DataTemplate DataType="{x:Type vms:PersonVM}">
+          <Grid>
+            <Grid.RowDefinitions>
+              <RowDefinition Height="auto" />
+              <RowDefinition />
+              <RowDefinition Height="auto" />
+            </Grid.RowDefinitions>
+            <TextBlock Name="PlayerNameText"
+                       Text="{Binding PlayerName}"
+                       HorizontalAlignment="Center"
+                       VerticalAlignment="Top"
+                       Margin="0,0,0,-5"
+                       FontSize="18" />
+            <ItemsControl ItemsSource="{Binding CardsInHand}"
+                          Grid.Row="1"
+                          HorizontalAlignment="Left"
+                          Margin="0,0,0,-40"
+                          VerticalAlignment="Top">
+              <ItemsControl.ItemsPanel>
+                <ItemsPanelTemplate>
+                  <Grid Margin="10,0" />
+                </ItemsPanelTemplate>
+              </ItemsControl.ItemsPanel>
+            </ItemsControl>
+            <TextBlock Name="BustTextBlock"
+                       Text="Bust!"
+                       FontSize="25"
+                       FontWeight="Medium"
+                       HorizontalAlignment="Center"
+                       VerticalAlignment="Center"
+                       Grid.Row="2"
+                       Grid.RowSpan="2"
+                       Margin="0,0,0,-43"
+                       Visibility="{Binding BustTextBlock}" />
+          </Grid>
+        </DataTemplate>
+      </UserControl.Resources>
+      <UserControl.Triggers>
+        <EventTrigger RoutedEvent="Binding.TargetUpdated">
+          <BeginStoryboard>
+            <Storyboard>
+              <DoubleAnimation Storyboard.TargetProperty="Opacity"
+                               Duration="0:0:0.5"
+                               From="0"
+                               To="1" />
+            </Storyboard>
+          </BeginStoryboard>
+        </EventTrigger>
+      </UserControl.Triggers>
+    </UserControl>
+    <ItemsControl Name="PlayersControl"
+                  Grid.ColumnSpan="5"
+                  Grid.Row="2"
+                  ItemsSource="{Binding Players}"
+                  HorizontalAlignment="Center"
+                  Visibility="{Binding PlayerCards, NotifyOnTargetUpdated=True}">
+      <ItemsControl.ItemsPanel>
+        <ItemsPanelTemplate>
+          <StackPanel Orientation="Horizontal" />
+        </ItemsPanelTemplate>
+      </ItemsControl.ItemsPanel>
+      <ItemsControl.ItemTemplate>
+        <DataTemplate>
+          <Grid Margin="20,0">
+            <Grid.RowDefinitions>
+              <RowDefinition Height="auto" />
+              <RowDefinition Height="auto" />
+              <RowDefinition Height="200" />
+              <RowDefinition Height="auto" />
+            </Grid.RowDefinitions>
+            <TextBlock Name="PlayerNameText"
+                       Text="{Binding PlayerName}"
+                       HorizontalAlignment="Center"
+                       VerticalAlignment="Bottom"
+                       FontSize="18" />
+            <StackPanel Name="Bet"
+                        Grid.Row="1"
+                        Orientation="Horizontal"
+                        HorizontalAlignment="Center"
+                        Margin="0,10,0,0"
+                        Height="18"
+                        Visibility="{Binding BetVisibility}">
+              <TextBlock Text="Bet:  "
+                         VerticalAlignment="Center" />
+              <TextBox HorizontalAlignment="Left"
+                       VerticalAlignment="Center"
+                       Text="{Binding BetText}"
+                       HorizontalContentAlignment="Center"
+                       VerticalContentAlignment="Center"
+                       FontWeight="Medium"
+                       Margin="0,0,20,0"
+                       Width="30"
+                       Height="18" />
+              <TextBlock Name="TotalMoneyLabel1"
+                         Text="Total Money: "
+                         HorizontalAlignment="Right"
+                         VerticalAlignment="Center" />
+              <TextBlock Name="TotalMoneyTextBlock1"
+                         Text="{Binding Money}"
+                         HorizontalAlignment="Left"
+                         VerticalAlignment="Center" />
+            </StackPanel>
+            <StackPanel Name="BetOnTable"
+                        Grid.Row="1"
+                        Orientation="Horizontal"
+                        HorizontalAlignment="Center"
+                        Margin="0,10,0,0"
+                        Height="15"
+                        Visibility="{Binding BetOnTable}">
+              <TextBlock Text="Bet:  "
+                         HorizontalAlignment="Left"
+                         VerticalAlignment="Center" />
+              <TextBlock Text="{Binding BetText}"
+                         HorizontalAlignment="Left"
+                         VerticalAlignment="Center" />
+              <TextBlock Name="TotalMoneyLabel2"
+                         Text="Total Money: "
+                         HorizontalAlignment="Right"
+                         VerticalAlignment="Center"
+                         Margin="22,0,0,0" />
+              <TextBlock Name="TotalMoneyTextBlock2"
+                         Text="{Binding Money}"
+                         HorizontalAlignment="Left"
+                         VerticalAlignment="Center" />
+            </StackPanel>
+            <TextBlock Name="NoMoney"
+                       Grid.Row="1"
+                       HorizontalAlignment="Center"
+                       Text="Out Of Money"
+                       Margin="0,20,0,0"
+                       Visibility="{Binding NoMoney}" />
+            <ItemsControl ItemsSource="{Binding CardsInHand}"
+                          Grid.Row="2"
+                          HorizontalAlignment="Left">
+              <ItemsControl.ItemsPanel>
+                <ItemsPanelTemplate>
+                  <Grid Margin="10,0" />
+                </ItemsPanelTemplate>
+              </ItemsControl.ItemsPanel>
+            </ItemsControl>
+            <StackPanel Grid.Row="3"
+                        Orientation="Horizontal"
+                        Visibility="{Binding HitAndStand}">
+              <!-- Bound to command found in TableVM and passes the current player
+                    which is the current DataContext for this button. -->
+              <Button Name="HitButton"
+                      Content="Hit"
+                      FontWeight="Medium"
+                      FontSize="14"
+                      Height="28"
+                      Width="80"
+                      Margin="5"
+                      BorderBrush="Transparent"
+                      Command="{Binding DataContext.HitCommand, RelativeSource={RelativeSource Mode=FindAncestor,AncestorType={x:Type Window}}}"
+                      CommandParameter="{Binding}">
+                <Button.Background>
+                  <LinearGradientBrush StartPoint="0.553,-0.96"
+                                       EndPoint="0.605,6.626">
+                    <GradientStop Color="White" />
+                    <GradientStop Color="Transparent"
+                                  Offset="0.495" />
+                    <GradientStop Color="White"
+                                  Offset="1" />
+                  </LinearGradientBrush>
+                </Button.Background>
+              </Button>
+              <!-- Data context is PersonVM but bound to a command found in
+                   TableVM and passed PlayerNumber parameter to command -->
+              <Button Name="StandButton"
+                      Content="Stand"
+                      FontWeight="Medium"
+                      FontSize="14"
+                      Height="28"
+                      Width="80"
+                      Margin="5"
+                      BorderBrush="Transparent"
+                      Command="{Binding DataContext.StandCommand, RelativeSource={RelativeSource Mode=FindAncestor, AncestorType={x:Type Window}}}"
+                      CommandParameter="{Binding}">
+                <Button.Background>
+                  <LinearGradientBrush StartPoint="0.553,-0.96"
+                                       EndPoint="0.605,6.626">
+                    <GradientStop Color="White" />
+                    <GradientStop Color="Transparent"
+                                  Offset="0.495" />
+                    <GradientStop Color="White"
+                                  Offset="1" />
+                  </LinearGradientBrush>
+                </Button.Background>
+              </Button>
+            </StackPanel>
+            <TextBlock Name="BustTextBlock"
+                       Text="Bust!"
+                       FontSize="25"
+                       FontWeight="Medium"
+                       HorizontalAlignment="Center"
+                       VerticalAlignment="Center"
+                       Grid.Row="3"
+                       Visibility="{Binding BustTextBlock}" />
+          </Grid>
+        </DataTemplate>
+      </ItemsControl.ItemTemplate>
+      <ItemsControl.Triggers>
+        <EventTrigger RoutedEvent="Binding.TargetUpdated">
+          <BeginStoryboard>
+            <Storyboard>
+              <DoubleAnimation Storyboard.TargetProperty="Opacity"
+                               Duration="0:0:0.5"
+                               From="0"
+                               To="1" />
+            </Storyboard>
+          </BeginStoryboard>
+        </EventTrigger>
+      </ItemsControl.Triggers>
+    </ItemsControl>
+  </Grid>
+</Window>

@@ -1,0 +1,40 @@
+NoMoney TextBlock (code)
+
+XAML:
+(PlayersControl)
+<TextBlock Name="NoMoney" 
+           Grid.Row="1"
+           HorizontalAlignment="Center"
+           Text="Out Of Money"
+	   Margin="0,20,0,0"
+           Visibility="{Binding NoMoney}"/>
+
+C#:
+(PersonVM)
+/// <summary>
+/// Visibility of the No Money Text Block
+/// </summary>
+private Visibility noMoneyTextBlock;
+
+Constructor -
+this.noMoneyTextBlock = Visiblity.Hidden;
+
+/// <summary>
+/// The visibility of the no money Textblock
+/// </summary>
+public Visibility NoMoney
+{
+  get
+  {
+    return this.noMoneyTextBlock;
+  }
+  set
+  {
+    this.noMoneyTextBlock = value;
+    this.OnNotify();
+  }
+}
+
+(player has no money: Hit and Stand Buttons)
+player.BetOnTable = Visibility.Hidden;
+player.NoMoney = Visibility.Visible;

@@ -1,0 +1,34 @@
+C:\Playground\BlackJackWPF\BlackJackWPF\bin\Debug\BlackJackWPF.exe.config
+C:\Playground\BlackJackWPF\BlackJackWPF\bin\Debug\BlackJackWPF.exe
+C:\Playground\BlackJackWPF\BlackJackWPF\bin\Debug\BlackJackWPF.pdb
+C:\Playground\BlackJackWPF\BlackJackWPF\obj\Debug\MainWindow.baml
+C:\Playground\BlackJackWPF\BlackJackWPF\obj\Debug\MainWindow.g.cs
+C:\Playground\BlackJackWPF\BlackJackWPF\obj\Debug\App.g.cs
+C:\Playground\BlackJackWPF\BlackJackWPF\obj\Debug\BlackJackWPF_MarkupCompile.cache
+C:\Playground\BlackJackWPF\BlackJackWPF\obj\Debug\BlackJackWPF.g.resources
+C:\Playground\BlackJackWPF\BlackJackWPF\obj\Debug\BlackJackWPF.Properties.Resources.resources
+C:\Playground\BlackJackWPF\BlackJackWPF\obj\Debug\BlackJackWPF.csproj.GenerateResource.Cache
+C:\Playground\BlackJackWPF\BlackJackWPF\obj\Debug\BlackJackWPF.exe
+C:\Playground\BlackJackWPF\BlackJackWPF\obj\Debug\BlackJackWPF.pdb
+C:\Playground\BlackJackWPF\BlackJackWPF\obj\Debug\GeneratedInternalTypeHelper.g.cs
+C:\Playground\BlackJackWPF\BlackJackWPF\obj\Debug\BlackJackWPF_MarkupCompile.lref
+C:\Playground\BlackJackWPF\BlackJackWPF\obj\Debug\Simple Styles.baml
+C:\Playground\BlackJackWPF\BlackJackWPF\obj\Debug\App.baml
+C:\Playground\BlackJackWPF\BlackJackWPF\obj\Debug\BlackJackWPF.csprojResolveAssemblyReference.cache
+C:\Users\Sean\Documents\SandBox\BlackJackUI\BlackJackWPF\BlackJackWPF\bin\Debug\BlackJackWPF.exe.config
+C:\Users\Sean\Documents\SandBox\BlackJackUI\BlackJackWPF\BlackJackWPF\bin\Debug\BlackJackWPF.exe
+C:\Users\Sean\Documents\SandBox\BlackJackUI\BlackJackWPF\BlackJackWPF\bin\Debug\BlackJackWPF.pdb
+C:\Users\Sean\Documents\SandBox\BlackJackUI\BlackJackWPF\BlackJackWPF\obj\Debug\BlackJackWPF.csprojResolveAssemblyReference.cache
+C:\Users\Sean\Documents\SandBox\BlackJackUI\BlackJackWPF\BlackJackWPF\obj\Debug\Simple Styles.baml
+C:\Users\Sean\Documents\SandBox\BlackJackUI\BlackJackWPF\BlackJackWPF\obj\Debug\App.baml
+C:\Users\Sean\Documents\SandBox\BlackJackUI\BlackJackWPF\BlackJackWPF\obj\Debug\MainWindow.g.cs
+C:\Users\Sean\Documents\SandBox\BlackJackUI\BlackJackWPF\BlackJackWPF\obj\Debug\App.g.cs
+C:\Users\Sean\Documents\SandBox\BlackJackUI\BlackJackWPF\BlackJackWPF\obj\Debug\GeneratedInternalTypeHelper.g.cs
+C:\Users\Sean\Documents\SandBox\BlackJackUI\BlackJackWPF\BlackJackWPF\obj\Debug\BlackJackWPF_MarkupCompile.cache
+C:\Users\Sean\Documents\SandBox\BlackJackUI\BlackJackWPF\BlackJackWPF\obj\Debug\BlackJackWPF_MarkupCompile.lref
+C:\Users\Sean\Documents\SandBox\BlackJackUI\BlackJackWPF\BlackJackWPF\obj\Debug\MainWindow.baml
+C:\Users\Sean\Documents\SandBox\BlackJackUI\BlackJackWPF\BlackJackWPF\obj\Debug\BlackJackWPF.g.resources
+C:\Users\Sean\Documents\SandBox\BlackJackUI\BlackJackWPF\BlackJackWPF\obj\Debug\BlackJackWPF.Properties.Resources.resources
+C:\Users\Sean\Documents\SandBox\BlackJackUI\BlackJackWPF\BlackJackWPF\obj\Debug\BlackJackWPF.csproj.GenerateResource.Cache
+C:\Users\Sean\Documents\SandBox\BlackJackUI\BlackJackWPF\BlackJackWPF\obj\Debug\BlackJackWPF.exe
+C:\Users\Sean\Documents\SandBox\BlackJackUI\BlackJackWPF\BlackJackWPF\obj\Debug\BlackJackWPF.pdb

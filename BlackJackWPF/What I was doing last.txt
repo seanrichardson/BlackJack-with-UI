@@ -1,0 +1,9 @@
+Just finished everything so it will not let a player set
+a bet or keep playing if they are out of money. It basically
+skips their turn.
+
+Next thing I need to do is set up an out of money text
+box that replaces "Bet: 0 and Total Money: 0".
+
+It would also be nice to make it so it does not let players
+bet more money then they currently have.
