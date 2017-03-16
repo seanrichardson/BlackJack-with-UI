@@ -2276,9 +2276,6 @@
       <RowDefinition Height="1*" />
       <RowDefinition Height="3*" />
     </Grid.RowDefinitions>
-    <CheckBox Height="25"
-              Width="100"
-              Content="TestCheckBox"/>
     <Canvas Name="TableTop"
             Opacity="0.5"
             Grid.ColumnSpan="5"
